@@ -1,3 +1,11 @@
+= Learn Haskell 
+:author: Anessollah Ima
+:email: https://github.com/imanesso[@imanesso]
+v1.0, 2020-09-01
+// settings:
+:source-highlighter: rouge
+:source-language: java,haskell
+:language: {source-language}
 :title: learn haskell
 :toc: left
 :toc-title:
@@ -10,12 +18,9 @@
 :stylesdir: ./styles
 :homepage: https://github.com/imanesso/learn-haskell
 
-image::Haskell-Logo.svg[Haskell,100,100]
 
 toc::[]
 
-[discrete]
-= Learn Haskell 
 
 Das Ziel dieses Dokuments ist es, zusammenzufassen, was ich über funktionale Programmierung in Haskell gelernt habe. Später soll es mir als Nachschlagewerk dienen, aber es kann auch als Tutorial verstanden werden für Programmierer, die eher imperative Sprachen kennen.
 
@@ -26,7 +31,8 @@ Das Ziel dieses Dokuments ist es, zusammenzufassen, was ich über funktionale Pr
 Funktionale Programmierung ermöglicht es, kurzen deklarativen Programmcode zu schreiben, welcher nur Daten und Funktionen kennt und dafür keine Nebenwirkungen hat. Funktionen einer funktionalen Programmiersprache bekommen einen Input und generieren einen Output, der _nur_ vom Input abhängt und keine inneren Zustände kennt.
 
 *Imperative Programmierung:*
-[source]
+
+[source,java]
 ----
 var x; //Funktionen können mit den Daten machen, was sie wollen.
 
@@ -34,23 +40,25 @@ f();
 g();
 ----
 
+
 *Funktionale (deklarative) Programmierung:*
-[source]
+[source, haskell]
 ----
-g(f(x)); //Daten werden in einem Funktionsfluss transformiert
+g(f x); --Daten werden in einem Funktionsfluss transformiert
 ----
 
 Es gibt einen Programmfluss, welcher durch eine Verkettung von Funktionen ensteht. Die Funktionen sind wie Maschienen, welche mit einem Input einen Output generieren.
 
 image::programmfluss.png[Programmfluss,500,250]
 
-=== Wieso Haskell?
+=== Wieso Haskell? 
+//image::Haskell-Logo.svg[Haskell,25,25]
 
 Die Funktionale Programmierung ist ein Programmierparadigma, dessen Konzepte auch in bekannten objektorientierten Programmiersprachen wie C# oder Java eingesetzt wird. Haskell ist aber eine pure funktionale Sprache, welche von Grund auf funktional designt wurde. Daher ist sie bestens dafür geeignet, das funktionale Programmieren kompromisslos zu lernen.
 
 === Setup
 
-*Download der Haskell Plattform:*
+*Download der Haskell Plattform:* +
 https://www.haskell.org/platform/
 
 Nach der Installation kann in der Kommandozeile `ghci` gestartet werden. GHCI ist die interaktive Umgebung des Haskell Compilers GHC.
@@ -97,6 +105,7 @@ image::funktionsdefinition.png[Funktionsdefinition,500,250]
 
 *Beispiele*
 
+[source,haskell]
 ----
 verdoppeln :: Integer -> Integer
 verdoppeln n = 2*n
@@ -107,6 +116,7 @@ addieren a b = a + b
 
 Vergleich mit Java
 
+[source,java]
 ----
 int verdoppeln(int n){
     return 2*n;

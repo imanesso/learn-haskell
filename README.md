@@ -7,3 +7,9 @@ The document is in german as there are plenty of tutorials in english and I also
 The document is hosted with github-pages and will be accessible under the following link:
 
 https://imanesso.github.io/learn-haskell/
+
+
+```haskell
+addieren :: Integer -> Integer -> Integer
+addieren a b = a + b
+```
