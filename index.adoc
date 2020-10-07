@@ -3,13 +3,13 @@
 :email: https://github.com/imanesso[@imanesso]
 v1.0, 2020-09-01
 // settings:
-:source-highlighter: rouge
+//:source-highlighter: rouge
 :source-language: java,haskell
 :language: {source-language}
 :title: learn haskell
 :toc: left
 :toc-title:
-:toclevels: 5
+:toclevels: 2
 :sectnums:
 :sectnumlevels: 5
 :sourcedir: ../src/
@@ -95,13 +95,15 @@ Um Skripte mit dem `.hs` Format zu schreiben, welche man dann kompilieren und au
 
 
 == Funktionsdefinition
-Um Funktionen definieren zu können braucht man in Haskell 3 Dinge:
+Um Funktionen definieren zu können, braucht man in Haskell einen Funktionsnamen, Parametertypen und einen Rückgabetyp.
 
-* [red]#Funktionsnamen#
-* [green]#Parametertypen#
-* [blue]#Rückgabetyp#
+//image::funktionsdefinition.png[Funktionsdefinition,500,250]
 
-image::funktionsdefinition.png[Funktionsdefinition,500,250]
+[source,haskell]
+----
+name :: ParameterType1 -> ParameterType2 -> ... -> ParameterTypeK -> ResultType
+name p1 p2 ... pk = e --Result based on parameters
+----
 
 *Beispiele*
 
@@ -126,3 +128,92 @@ int addieren(int a, int b){
     return a+b;
 }
 ----
+
+== Typen
+
+=== Was ist ein Typ
+Daten sind einfach eine Menge von Bits, welche ohne korrekte Interpretation nutzlos sind. Typen geben diesen einfachen Bits Bedeutung.
+
+Typen stellen sicher, dass auf den Werten von Variablen keine Operationen ausgeführt werden, die syntaktisch oder semantisch fehlerhaft sind und dass diese Werte im definierten Wertebereich sind.
+
+Haskell hat wie Java ein *statisches Typsystem*. JS und Python haben ein dynamisches Typsystem, welches die Typen erst zur Laufzeit prüft.
+
+In der Praxis ist es z. T überraschend, wie die Sprachen Ausdrücke interpretieren:
+
+[cols="2,1,1,1,1", options="header"] 
+.Typenvergleich
+|===
+|Ausdruck
+|Javascript
+|Python
+|Java
+|Haskell
+
+|`5 + 8`
+|`13`
+|`13`
+|`13`
+|`13`
+
+|`5 + "Hallo"`
+|``"5Hallo"``
+|[red]#Error#
+|`"5Hallo"`
+|[red]#Error#
+
+|`5 + True`
+|`6`
+|`6`
+|[red]#Error#
+|[red]#Error#
+
+|`5 - "2"`
+|`3`
+|[red]#Error#
+|[red]#Error#
+|[red]#Error#
+
+|`5 * "1"`
+|5
+|`11111`
+|[red]#Error#
+|[red]#Error#
+
+|`False * "Hallo"`
+|`NaN`
+|""
+|[red]#Error#
+|[red]#Error#
+|===
+
+=== Typen
+
+==== Basic Types
+
+[cols="1,1,1", options="header"] 
+.Haskell Typen
+|===
+|Typ
+|Beschreibung
+|Wertebereich
+
+|[blue]#Bool#
+|Für logische Werte
+|True oder False
+
+|[blue]#Char#
+|Für Zeichen
+|Alle Zeichen
+
+|[blue]#Int#
+|Für ganzzahlige Integer
+|64 Bit Integer, also -2^63 to 2^63-1
+
+|[blue]#Integer#
+|Für alle ganzzahligen Integer. Langsamer, da nicht CPU supportet.
+|Kein fixer Wertebereich. Soviel, wie die CPU schafft.
+
+|[blue]#Double#
+|Für alle Gleitkommazahlen
+|64 Bit Floating Point
+|===
