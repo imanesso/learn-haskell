@@ -11,7 +11,7 @@ v1.0, 2020-09-01
 :toc-title:
 :toclevels: 2
 :sectnums:
-:sectnumlevels: 5
+:sectnumlevels: 2
 :sourcedir: ../src/
 :imagesdir: ./assets/images
 :iconsdir: ./icons
@@ -93,11 +93,8 @@ Um Skripte mit dem `.hs` Format zu schreiben, welche man dann kompilieren und au
 |===
 
 
-
 == Funktionsdefinition
 Um Funktionen definieren zu können, braucht man in Haskell einen Funktionsnamen, Parametertypen und einen Rückgabetyp.
-
-//image::funktionsdefinition.png[Funktionsdefinition,500,250]
 
 [source,haskell]
 ----
@@ -217,3 +214,84 @@ In der Praxis ist es z. T überraschend, wie die Sprachen Ausdrücke interpretie
 |Für alle Gleitkommazahlen
 |64 Bit Floating Point
 |===
+
+==== Enumeration Types
+Mit `data` kann man Enumerationen erstellen
+
+[source,haskell]
+----
+data Color = Red | Yellow | Green deriving (Show) <1>
+data ToDo  = Stop | Wait | Go deriving (Show) <2>
+----
+<1> Enum mit 3 Farben
+<2> Enum mit 3 Zuständen
+
+
+`deriving (Show)` macht das die Werte als `String` zurückgegeben werden können
+
+==== Tuples - Aggregated Types
+Tuples sind aggregierte Typen, welche eine endliche Sequenz von Komponenten mit unterschiedlichen Typen beinhaltet.
+
+*Arity* nennt man die Anzahl Komponenten eines Tuples
+
+[source,haskell]
+----
+(False, 8, "Hallo") <1>
+(8, 'a', True, "Text") <2>
+((True, `8`), (`e`, False, `x`))
+----
+<1> Das Tuple hat die Komponententypen `(Bool, Int, String)` und haben eine Arity von 3
+<2> Das Tuple hat die Komponententypen `(Int, Char, Bool, String)` und haben eine Arity von 4
+<3> Das Tuple hat zwei Tuple als Komponenten mit der Arity von 2
+
+*Zugriff auf Tuple Komponenten* +
+Zugreifen kann man mittels Pattern Matching. Darauf wird später eingegangen.
+
+[source,haskell]
+----
+fstInt :: (Int,Int) -> Int 
+fstInt (x, y) = x 
+
+sndInt:: (Int,Int) -> Int
+sndInt (x, y) = y
+----
+
+==== Polymorphe Typen
+Die Funktionen `fstInt` und `sndInt` im letzten Teil funktionieren nur bei 2-Tuplen mit zwei `Int`. Um eine Funktion zu schreiben, welche für alle Typen funktioniert, benötigt man polymorphe Typen:
+
+[source,haskell]
+----
+fst :: (a,b) -> a <1>
+fst (x, y) = x 
+
+snd:: (a,b) -> b
+snd (x, y) = y
+----
+<1> `a` und `b` sind polymorphe Typen
+
+Funktionen wie `fst` und `snd` nenn man *Polymorphe Funktionen*, da sie einen parametrischen Polymorphismus ermöglichen. Mit solchen Funktionen kann man weniger Code mit weniger Typfehleranfälligkeiten schreiben.
+
+==== Typ Synonyme
+Mit dem Schlüsselwort `type` kann man einen Typ Synonym erstellen. Dieser ist kein neuer Typ, sondern nur ein neuer Name!
+
+[source,haskell]
+----
+type Coord = (Int, Int)
+----
+Hier kann zum Beispiel `Coord` gleich verwendet werden wie ein normales `(Int, Int)` Tuple. Es hilft nur der Leserlichkeit.
+
+==== Record Types
+
+Record Types sind neue eigene Typen die man definieren kann.
+
+[source,haskell]
+----
+data Person = Person { name :: String , age :: Int } deriving (Show)
+----
+
+==== Function Types
+Funktionen haben auch einen Typ. Es hat einen Typ für input parameter und für output parameter
+
+----
+functionname :: Inputtype -> Outputtype
+----
