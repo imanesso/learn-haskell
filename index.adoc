@@ -135,6 +135,8 @@ Typen stellen sicher, dass auf den Werten von Variablen keine Operationen ausgef
 
 Haskell hat wie Java ein *statisches Typsystem*. JS und Python haben ein dynamisches Typsystem, welches die Typen erst zur Laufzeit prüft.
 
+TIP: Mit `:t` kann man in der ghci den Typ eines Ausdrucks herausfinden. z. B `:t max`
+
 In der Praxis ist es z. T überraschend, wie die Sprachen Ausdrücke interpretieren:
 
 [cols="2,1,1,1,1", options="header"] 
@@ -292,6 +294,61 @@ data Person = Person { name :: String , age :: Int } deriving (Show)
 ==== Function Types
 Funktionen haben auch einen Typ. Es hat einen Typ für input parameter und für output parameter
 
+[source,haskell]
 ----
 functionname :: Inputtype -> Outputtype
 ----
+
+==== Type classes
+
+Typklassen sind vergleichbar mit Interfaces in Java oder C#. Wenn ein Typ Teil einer Typklasse ist, dann bedeutet das, dass gewisses Verhalten der Typklasse darin enthalten ist.
+
+Basic Type Classes::
+  Eq – equality types:::
+    * Contains types whose values can be compared for equality and inequality
+    * methods: (==), (/=)
+  Ord – ordered types:::
+    * Contains types whose values are totally ordered
+    * methods: (<), (<=), (>), (>=), min, max
+  Show – showable types:::
+    * Contains types whose values can be converted into strings of characters
+    * method `show : a -> String`
+  Num – numeric types:::
+    * Contains types whose values are numeric
+    * methods: (+), (-), (*), negate, abs, signum
+  Integral – integral types:::
+    * Contains types that are numeric but of integral value
+    * methods: div, mod
+  Fractional – fractional types:::
+    * Contains types that are numeric but of fractional value
+    * methods: (/), recip
+
+NOTE: Alle Operatoren in Haskell sind auch Funktionen, welche infix geschrieben werden können. Wenn man in der ghci den Typ eines Operators anschaut, z. B `:t ==`, dann sieht man die Verwendung der Typklassen.
+
+*Berechnung mit Zahlen* +
+
+Alle Zahlen gehören der Typklasse `Num` an. Dabei sieht die Hierarchie folgendermassen aus:
+
+* `Num`
+** `Integral` mit Typen `Int` und `Integer`
+** `Fractional` mit dem Typ `Double`
+
+CAUTION: Haskell konvertiert Zahlentypen nicht automatisch
+
+Um Ganzzahlen zu konvertieren, gibt es die hilfreiche Methode: + 
+ `fromIntegral :: (Integral a, Num b) => a -> b`
+
+Die Methode `length` zum Beispiel gibt einen `Int` zurück, wenn man dazu `1.1` addieren möchte, dann benötigt man die Funktion `fromIntegral`
+
+[source,haskell]
+----
+length [1,2,3,4]) + 1.1 <1>
+
+fromIntegral (length [1,2,3,4]) + 1.1 <2>
+----
+<1> führt zu einem Fehler, da length einen `Int` zurückgibt und 1.1 ein `Double ist`
+
+<2> `fromIntegral` löst das Problem
+
+== Quellen
+* http://learnyouahaskell.com/types-and-typeclasses
