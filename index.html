@@ -454,7 +454,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_setup">1.3. Setup</a></li>
 </ul>
 </li>
-<li><a href="#_funktionsdefinition">2. Funktionsdefinition</a></li>
+<li><a href="#_arithmetik_und_erste_funktionen">2. Arithmetik und erste Funktionen</a>
+<ul class="sectlevel2">
+<li><a href="#_erste_funktion">2.1. Erste Funktion</a></li>
+</ul>
+</li>
+<li><a href="#_typen">3. Typen</a>
+<ul class="sectlevel2">
+<li><a href="#_was_ist_ein_typ">3.1. Was ist ein Typ</a></li>
+<li><a href="#_typen_2">3.2. Typen</a></li>
+</ul>
+</li>
+<li><a href="#_quellen">4. Quellen</a></li>
 </ul>
 </div>
 </div>
@@ -567,28 +578,36 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="_funktionsdefinition">2. Funktionsdefinition</h2>
+<h2 id="_arithmetik_und_erste_funktionen">2. Arithmetik und erste Funktionen</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Um Funktionen definieren zu können braucht man in Haskell 3 Dinge:</p>
+<p>Wenn alles installiert ist, dann kann man bereits kleine Programme im Terminal schreiben, dafür muss man nur ghci starten  mit dem Befehl <code>ghci</code>. Dann kann man erste Funktionen, welche es bereits in Haskell gibt ausprobieren, wie z. B in der <code>jshell</code> in Java.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><span class="red">Funktionsnamen</span></p>
-</li>
-<li>
-<p><span class="green">Parametertypen</span></p>
-</li>
-<li>
-<p><span class="blue">Rückgabetyp</span></p>
-</li>
-</ul>
-</div>
-<div class="imageblock">
+<div class="listingblock">
 <div class="content">
-<img src="./assets/images/funktionsdefinition.png" alt="Funktionsdefinition" width="500" height="250">
+<pre class="rouge highlight"><code data-lang="terminal"><span class="gp">&gt;</span>ghci 5+5
+<span class="go">10
+
+</span><span class="gp">&gt;</span>ghci <span class="nv">5</span><span class="o">==</span>5
+<span class="go">True
+
+</span><span class="gp">&gt;</span>ghci max 5 6 7
+<span class="go">7</span></code></pre>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_erste_funktion">2.1. Erste Funktion</h3>
+<div class="paragraph">
+<p>Um Funktionen definieren zu können, braucht man in Haskell einen Funktionsnamen, Parametertypen und einen Rückgabetyp.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="n">name</span> <span class="o">::</span> <span class="kt">ParameterType1</span> <span class="o">-&gt;</span> <span class="kt">ParameterType2</span> <span class="o">-&gt;</span> <span class="o">...</span> <span class="o">-&gt;</span> <span class="kt">ParameterTypeK</span> <span class="o">-&gt;</span> <span class="kt">ResultType</span>
+<span class="n">name</span> <span class="n">p1</span> <span class="n">p2</span> <span class="o">...</span> <span class="n">pk</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">+</span> <span class="n">pk</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1">--Result based on parameters</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Sehr kleine Methoden kann man auch ohne Typdefinition schreiben, aber das führt schnell zu Fehler und ist nicht empfohlen.</p>
 </div>
 <div class="paragraph">
 <p><strong>Beispiele</strong></p>
@@ -616,12 +635,505 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <span class="o">}</span></code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p><strong>Funktionsaufruf</strong></p>
+</div>
+<div class="paragraph">
+<p>Wenn man die <code>addieren</code> Funktion aufrufen möchte, dann kann man das in einem File wie <code>Mathe.hs</code> speichern.
+Dieses File kann man in die ghci laden mit dem Befehl <code>ghci Mathe.hs</code>, wenn die ghci noch nicht gestartet ist oder <code>:l Mathe.hs</code>, wenn sie schon gestartet ist.</p>
+</div>
+<div class="paragraph">
+<p>Wenn das File geladen wurde, dann kann man die Funktion mit den Parametern folgendermassen aufrufen</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="terminal"><span class="gp">&gt;</span>ghci addiere 5 5
+<span class="go">10
+
+</span><span class="gp">&gt;</span>ghci verdopple 8
+<span class="go">16</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_typen">3. Typen</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_was_ist_ein_typ">3.1. Was ist ein Typ</h3>
+<div class="paragraph">
+<p>Daten sind einfach eine Menge von Bits, welche ohne korrekte Interpretation nutzlos sind. Typen geben diesen einfachen Bits Bedeutung.</p>
+</div>
+<div class="paragraph">
+<p>Typen stellen sicher, dass auf den Werten von Variablen keine Operationen ausgeführt werden, die syntaktisch oder semantisch fehlerhaft sind und dass diese Werte im definierten Wertebereich sind.</p>
+</div>
+<div class="paragraph">
+<p>Haskell hat wie Java ein <strong>statisches Typsystem</strong>. JS und Python haben ein dynamisches Typsystem, welches die Typen erst zur Laufzeit prüft.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Tip</div>
+</td>
+<td class="content">
+Mit <code>:t</code> kann man in der ghci den Typ eines Ausdrucks herausfinden. z. B <code>:t max</code>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In der Praxis ist es z. T überraschend, wie die Sprachen Ausdrücke interpretieren:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Typenvergleich</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6669%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Ausdruck</th>
+<th class="tableblock halign-left valign-top">Javascript</th>
+<th class="tableblock halign-left valign-top">Python</th>
+<th class="tableblock halign-left valign-top">Java</th>
+<th class="tableblock halign-left valign-top">Haskell</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>5 + 8</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>13</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>13</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>13</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>13</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>5 + "Hallo"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>"5Hallo"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="red">Error</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>"5Hallo"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="red">Error</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>5 + True</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>6</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>6</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="red">Error</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="red">Error</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>5 - "2"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>3</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="red">Error</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="red">Error</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="red">Error</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>5 * "1"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>11111</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="red">Error</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="red">Error</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>False * "Hallo"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>NaN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">""</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="red">Error</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="red">Error</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_typen_2">3.2. Typen</h3>
+<div class="sect3">
+<h4 id="_basic_types">Basic Types</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Haskell Typen</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Typ</th>
+<th class="tableblock halign-left valign-top">Beschreibung</th>
+<th class="tableblock halign-left valign-top">Wertebereich</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="blue">Bool</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Für logische Werte</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">True oder False</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="blue">Char</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Für Zeichen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Alle Zeichen</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="blue">Int</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Für ganzzahlige Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">64 Bit Integer, also -2^63 to 2^63-1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="blue">Integer</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Für alle ganzzahligen Integer. Langsamer, da nicht CPU supportet.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Kein fixer Wertebereich. Soviel, wie die CPU schafft.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><span class="blue">Double</span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Für alle Gleitkommazahlen</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">64 Bit Floating Point</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_enumeration_types">Enumeration Types</h4>
+<div class="paragraph">
+<p>Mit <code>data</code> kann man Enumerationen erstellen</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="kr">data</span> <span class="kt">Color</span> <span class="o">=</span> <span class="kt">Red</span> <span class="o">|</span> <span class="kt">Yellow</span> <span class="o">|</span> <span class="kt">Green</span> <span class="kr">deriving</span> <span class="p">(</span><span class="kt">Show</span><span class="p">)</span> <b class="conum">(1)</b>
+<span class="kr">data</span> <span class="kt">ToDo</span>  <span class="o">=</span> <span class="kt">Stop</span> <span class="o">|</span> <span class="kt">Wait</span> <span class="o">|</span> <span class="kt">Go</span> <span class="kr">deriving</span> <span class="p">(</span><span class="kt">Show</span><span class="p">)</span> <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Enum mit 3 Farben</p>
+</li>
+<li>
+<p>Enum mit 3 Zuständen</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<code>deriving (Show)</code> macht, dass die Werte als <code>String</code> zurückgegeben werden können
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tuples">Tuples</h4>
+<div class="paragraph">
+<p>Tuples sind aggregierte Typen, welche eine endliche Sequenz von Komponenten mit unterschiedlichen Typen beinhaltet.</p>
+</div>
+<div class="paragraph">
+<p><strong>Arity</strong> nennt man die Anzahl Komponenten eines Tuples</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="p">(</span><span class="kt">False</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="s">"Hallo"</span><span class="p">)</span> <b class="conum">(1)</b>
+<span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="sc">'a'</span><span class="p">,</span> <span class="kt">True</span><span class="p">,</span> <span class="s">"Text"</span><span class="p">)</span> <b class="conum">(2)</b>
+<span class="p">((</span><span class="kt">True</span><span class="p">,</span> <span class="p">`</span><span class="mi">8</span><span class="p">`),</span> <span class="p">(`</span><span class="n">e</span><span class="p">`,</span> <span class="kt">False</span><span class="p">,</span> <span class="p">`</span><span class="n">x</span><span class="p">`))</span> <b class="conum">(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>Das Tuple hat die Komponententypen <code>(Bool, Int, String)</code> und haben eine Arity von 3</p>
+</li>
+<li>
+<p>Das Tuple hat die Komponententypen <code>(Int, Char, Bool, String)</code> und haben eine Arity von 4</p>
+</li>
+<li>
+<p>Das Tuple hat zwei Tuple als Komponenten mit der Arity von 2</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Zugriff auf Tuple Komponenten</strong><br>
+Zugreifen kann man mittels Pattern Matching. Darauf wird später eingegangen.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="n">fstInt</span> <span class="o">::</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">fstInt</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="n">x</span>
+
+<span class="n">sndInt</span><span class="o">::</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">sndInt</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="n">y</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_polymorphe_typen">Polymorphe Typen</h4>
+<div class="paragraph">
+<p>Die Funktionen <code>fstInt</code> und <code>sndInt</code> im letzten Teil funktionieren nur bei 2-Tuplen mit zwei <code>Int</code>. Um eine Funktion zu schreiben, welche für alle Typen funktioniert, benötigt man polymorphe Typen:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="n">fst</span> <span class="o">::</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">a</span> <b class="conum">(1)</b>
+<span class="n">fst</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="n">x</span>
+
+<span class="n">snd</span><span class="o">::</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">b</span>
+<span class="n">snd</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">=</span> <span class="n">y</span></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p><code>a</code> und <code>b</code> sind polymorphe Typen</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Funktionen wie <code>fst</code> und <code>snd</code> nenn man <strong>Polymorphe Funktionen</strong>, da sie einen parametrischen Polymorphismus ermöglichen. Mit solchen Funktionen kann man weniger Code mit weniger Typfehleranfälligkeiten schreiben.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_typ_synonyme">Typ Synonyme</h4>
+<div class="paragraph">
+<p>Mit dem Schlüsselwort <code>type</code> kann man einen Typ Synonym erstellen. Dieser ist kein neuer Typ, sondern nur ein neuer Name!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="kr">type</span> <span class="kt">Coord</span> <span class="o">=</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Hier kann zum Beispiel <code>Coord</code> gleich verwendet werden wie ein normales <code>(Int, Int)</code> Tuple. Es hilft nur der Leserlichkeit.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_record_types">Record Types</h4>
+<div class="paragraph">
+<p>Record Types sind neue eigene Typen die man definieren kann.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="kr">data</span> <span class="kt">Person</span> <span class="o">=</span> <span class="kt">Person</span> <span class="p">{</span> <span class="n">name</span> <span class="o">::</span> <span class="kt">String</span> <span class="p">,</span> <span class="n">age</span> <span class="o">::</span> <span class="kt">Int</span> <span class="p">}</span> <span class="kr">deriving</span> <span class="p">(</span><span class="kt">Show</span><span class="p">)</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_function_types">Function Types</h4>
+<div class="paragraph">
+<p>Funktionen haben auch einen Typ. Es hat einen Typ für input parameter und für output parameter</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="n">functionname</span> <span class="o">::</span> <span class="kt">Inputtype</span> <span class="o">-&gt;</span> <span class="kt">Outputtype</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_type_classes">Type classes</h4>
+<div class="paragraph">
+<p>Typklassen sind vergleichbar mit Interfaces in Java oder C#. Wenn ein Typ Teil einer Typklasse ist, dann bedeutet das, dass gewisses Verhalten der Typklasse darin enthalten ist.</p>
+</div>
+<div class="paragraph">
+<p>Einfach kann man das testen, wenn man in der ghci Typen von Operatoren anschaut.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Alle Operatoren in Haskell sind auch Funktionen, welche infix geschrieben werden können. Wenn man in der ghci den Typ eines Operators anschaut, z. B <code>:t ==</code>, dann sieht man die Verwendung der Typklassen
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Die <code>Eq</code> Typeklasse bietet eine Schnittstelle, um die Gleichheit der Elemente zu überprüfen. Alle Standart Typen in Haskell gehören zu dieser Typklasse.</p>
+</div>
+<div class="paragraph">
+<p>Hier sind alle Standard-Typklassen in Haskell mit unterstützten Funktionen.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="terminal"><span class="gp">&gt;</span>ghci :t <span class="o">==</span>
+<span class="gp">(==) :: (Eq a) =&gt;</span><span class="w"> </span>a -&gt; a -&gt; Bool</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Basic Type Classes</dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Eq – equality types</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Enthält Typen, deren Werte auf Gleichheit und Ungleichheit verglichen werden können</p>
+</li>
+<li>
+<p>Methoden: <code>(==)</code>, <code>(/=)</code></p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Ord – ordered types</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Enthält Typen, deren Werte vollständig geordnet sind</p>
+</li>
+<li>
+<p>Methoden: <code>(&lt;)</code>, <code>(&#8656;)</code>, <code>(&gt;)</code>, <code>(&gt;=)</code>, <code>min</code>, <code>max</code></p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Show – showable types</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Enthält Typen, deren Werte in Zeichenketten konvertiert werden können</p>
+</li>
+<li>
+<p>Methoden <code>show</code></p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Num – numeric types</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Enthält Typen, deren Werte numerisch sind</p>
+</li>
+<li>
+<p>Methoden: <code>(+)</code>, <code>(-)</code>, <code>(*)</code>, <code>negate</code>, <code>abs</code>, <code>signum</code></p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Integral – integral types</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Enthält Typen, die numerisch sind, aber einen ganzzahligen Wert haben</p>
+</li>
+<li>
+<p>Methoden: <code>div</code>, <code>mod</code></p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Fractional – fractional types</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Enthält Typen, die numerisch, aber von gebrochenem Wert sind</p>
+</li>
+<li>
+<p>Methoden: <code>(/)</code>, <code>recip</code></p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p><strong>Berechnung mit Zahlen</strong><br></p>
+</div>
+<div class="paragraph">
+<p>Alle Zahlen gehören der Typklasse <code>Num</code> an. Dabei sieht die Hierarchie folgendermassen aus:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Num</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Integral</code> mit Typen <code>Int</code> und <code>Integer</code></p>
+</li>
+<li>
+<p><code>Fractional</code> mit dem Typ <code>Double</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Caution</div>
+</td>
+<td class="content">
+Haskell konvertiert Zahlentypen nicht automatisch
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Um Ganzzahlen zu konvertieren, gibt es die hilfreiche Methode:<br>
+ <code>fromIntegral :: (Integral a, Num b) &#8658; a &#8594; b</code></p>
+</div>
+<div class="paragraph">
+<p>Die Methode <code>length</code> zum Beispiel gibt einen <code>Int</code> zurück, wenn man dazu <code>1.1</code> addieren möchte, dann benötigt man die Funktion <code>fromIntegral</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="n">length</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span> <span class="o">+</span> <span class="mf">1.1</span> <b class="conum">(1)</b>
+
+<span class="n">fromIntegral</span> <span class="p">(</span><span class="n">length</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span> <span class="o">+</span> <span class="mf">1.1</span> <b class="conum">(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<ol>
+<li>
+<p>führt zu einem Fehler, da length einen <code>Int</code> zurückgibt und 1.1 ein <code>Double ist</code></p>
+</li>
+<li>
+<p><code>fromIntegral</code> löst das Problem</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quellen">4. Quellen</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://learnyouahaskell.com/types-and-typeclasses" class="bare">http://learnyouahaskell.com/types-and-typeclasses</a></p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-09-29 18:34:59 +0200
+Last updated 2020-10-10 14:22:19 +0200
 </div>
 </div>
 <style>
