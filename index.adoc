@@ -14,7 +14,8 @@ v1.0, 2020-09-01
 :sectnumlevels: 2
 :sourcedir: ../src/
 :imagesdir: ./assets/images
-:iconsdir: ./icons
+:icons: font
+//:iconsdir: ./icons
 :stylesdir: ./styles
 :homepage: https://github.com/imanesso/learn-haskell
 
