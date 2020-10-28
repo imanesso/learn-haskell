@@ -3,7 +3,7 @@
 :email: https://github.com/imanesso[@imanesso]
 v1.0, 2020-09-01
 // settings:
-//:source-highlighter: rouge
+:source-highlighter: rouge
 :source-language: java,haskell
 :language: {source-language}
 :title: learn haskell
@@ -53,8 +53,6 @@ Es gibt einen Programmfluss, welcher durch eine Verkettung von Funktionen ensteh
 image::programmfluss.png[Programmfluss,500,250]
 
 === Wieso Haskell? 
-//image::Haskell-Logo.svg[Haskell,25,25]
-
 Die Funktionale Programmierung ist ein Programmierparadigma, dessen Konzepte auch in bekannten objektorientierten Programmiersprachen wie C# oder Java eingesetzt wird. Haskell ist aber eine pure funktionale Sprache, welche von Grund auf funktional designt wurde. Daher ist sie bestens dafür geeignet, das funktionale Programmieren kompromisslos zu lernen.
 
 === Setup
@@ -94,14 +92,31 @@ Um Skripte mit dem `.hs` Format zu schreiben, welche man dann kompilieren und au
 |===
 
 
-== Funktionsdefinition
+== Arithmetik und erste Funktionen
+Wenn alles installiert ist, dann kann man bereits kleine Programme im Terminal schreiben, dafür muss man nur ghci starten  mit dem Befehl `ghci`. Dann kann man erste Funktionen, welche es bereits in Haskell gibt ausprobieren, wie z. B in der `jshell` in Java.
+
+[source,terminal]
+----
+>ghci 5+5
+10
+
+>ghci 5==5
+True
+
+>ghci max 5 6 7
+7
+----
+
+=== Erste Funktion
 Um Funktionen definieren zu können, braucht man in Haskell einen Funktionsnamen, Parametertypen und einen Rückgabetyp.
 
 [source,haskell]
 ----
 name :: ParameterType1 -> ParameterType2 -> ... -> ParameterTypeK -> ResultType
-name p1 p2 ... pk = e --Result based on parameters
+name p1 p2 ... pk = p1 + pk + 1 --Result based on parameters
 ----
+
+Sehr kleine Methoden kann man auch ohne Typdefinition schreiben, aber das führt schnell zu Fehler und ist nicht empfohlen.
 
 *Beispiele*
 
@@ -125,6 +140,22 @@ int verdoppeln(int n){
 int addieren(int a, int b){
     return a+b;
 }
+----
+
+*Funktionsaufruf*
+
+Wenn man die `addieren` Funktion aufrufen möchte, dann kann man das in einem File wie `Mathe.hs` speichern.
+Dieses File kann man in die ghci laden mit dem Befehl `ghci Mathe.hs`, wenn die ghci noch nicht gestartet ist oder `:l Mathe.hs`, wenn sie schon gestartet ist.
+
+Wenn das File geladen wurde, dann kann man die Funktion mit den Parametern folgendermassen aufrufen 
+
+[source,terminal]
+----
+>ghci addiere 5 5
+10
+
+>ghci verdopple 8
+16
 ----
 
 == Typen
@@ -230,9 +261,9 @@ data ToDo  = Stop | Wait | Go deriving (Show) <2>
 <2> Enum mit 3 Zuständen
 
 
-`deriving (Show)` macht das die Werte als `String` zurückgegeben werden können
+NOTE: `deriving (Show)` macht, dass die Werte als `String` zurückgegeben werden können
 
-==== Tuples - Aggregated Types
+==== Tuples
 Tuples sind aggregierte Typen, welche eine endliche Sequenz von Komponenten mit unterschiedlichen Typen beinhaltet.
 
 *Arity* nennt man die Anzahl Komponenten eines Tuples
@@ -241,7 +272,7 @@ Tuples sind aggregierte Typen, welche eine endliche Sequenz von Komponenten mit 
 ----
 (False, 8, "Hallo") <1>
 (8, 'a', True, "Text") <2>
-((True, `8`), (`e`, False, `x`))
+((True, `8`), (`e`, False, `x`)) <3>
 ----
 <1> Das Tuple hat die Komponententypen `(Bool, Int, String)` und haben eine Arity von 3
 <2> Das Tuple hat die Komponententypen `(Int, Char, Bool, String)` und haben eine Arity von 4
@@ -304,27 +335,39 @@ functionname :: Inputtype -> Outputtype
 
 Typklassen sind vergleichbar mit Interfaces in Java oder C#. Wenn ein Typ Teil einer Typklasse ist, dann bedeutet das, dass gewisses Verhalten der Typklasse darin enthalten ist.
 
+Einfach kann man das testen, wenn man in der ghci Typen von Operatoren anschaut.
+
+NOTE: Alle Operatoren in Haskell sind auch Funktionen, welche infix geschrieben werden können. Wenn man in der ghci den Typ eines Operators anschaut, z. B `:t ==`, dann sieht man die Verwendung der Typklassen
+
+Die `Eq` Typeklasse bietet eine Schnittstelle, um die Gleichheit der Elemente zu überprüfen. Alle Standart Typen in Haskell gehören zu dieser Typklasse.
+
+Hier sind alle Standard-Typklassen in Haskell mit unterstützten Funktionen.
+
+[source,terminal]
+----
+>ghci :t ==
+(==) :: (Eq a) => a -> a -> Bool 
+----
+
 Basic Type Classes::
   Eq – equality types:::
-    * Contains types whose values can be compared for equality and inequality
-    * methods: (==), (/=)
+    * Enthält Typen, deren Werte auf Gleichheit und Ungleichheit verglichen werden können
+    * Methoden: `(==)`, `(/=)`
   Ord – ordered types:::
-    * Contains types whose values are totally ordered
-    * methods: (<), (<=), (>), (>=), min, max
+    * Enthält Typen, deren Werte vollständig geordnet sind
+    * Methoden: `(<)`, `(<=)`, `(>)`, `(>=)`, `min`, `max`
   Show – showable types:::
-    * Contains types whose values can be converted into strings of characters
-    * method `show : a -> String`
+    * Enthält Typen, deren Werte in Zeichenketten konvertiert werden können 
+    * Methoden `show`
   Num – numeric types:::
-    * Contains types whose values are numeric
-    * methods: (+), (-), (*), negate, abs, signum
+    * Enthält Typen, deren Werte numerisch sind
+    * Methoden: `(+)`, `(-)`, `(*)`, `negate`, `abs`, `signum`
   Integral – integral types:::
-    * Contains types that are numeric but of integral value
-    * methods: div, mod
+    * Enthält Typen, die numerisch sind, aber einen ganzzahligen Wert haben
+    * Methoden: `div`, `mod`
   Fractional – fractional types:::
-    * Contains types that are numeric but of fractional value
-    * methods: (/), recip
-
-NOTE: Alle Operatoren in Haskell sind auch Funktionen, welche infix geschrieben werden können. Wenn man in der ghci den Typ eines Operators anschaut, z. B `:t ==`, dann sieht man die Verwendung der Typklassen.
+    * Enthält Typen, die numerisch, aber von gebrochenem Wert sind
+    * Methoden: `(/)`, `recip`
 
 *Berechnung mit Zahlen* +
 
@@ -341,7 +384,7 @@ Um Ganzzahlen zu konvertieren, gibt es die hilfreiche Methode: +
 
 Die Methode `length` zum Beispiel gibt einen `Int` zurück, wenn man dazu `1.1` addieren möchte, dann benötigt man die Funktion `fromIntegral`
 
-[source,haskell]
+[source, haskell]
 ----
 length [1,2,3,4]) + 1.1 <1>
 
