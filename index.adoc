@@ -284,27 +284,27 @@ Zugreifen kann man mittels Pattern Matching. Darauf wird später eingegangen.
 
 [source,haskell]
 ----
-fstInt :: (Int,Int) -> Int 
-fstInt (x, y) = x 
+firstInt :: (Int,Int) -> Int 
+firstInt (x, y) = x 
 
-sndInt:: (Int,Int) -> Int
-sndInt (x, y) = y
+secondInt:: (Int,Int) -> Int
+secondInt (x, y) = y
 ----
 
 ==== Polymorphe Typen
-Die Funktionen `fstInt` und `sndInt` im letzten Teil funktionieren nur bei 2-Tuplen mit zwei `Int`. Um eine Funktion zu schreiben, welche für alle Typen funktioniert, benötigt man polymorphe Typen:
+Die Funktionen `firstInt` und `secondInt` im letzten Teil funktionieren nur bei 2-Tuplen mit zwei `Int`. Um eine Funktion zu schreiben, welche für alle Typen funktioniert, benötigt man polymorphe Typen:
 
 [source,haskell]
 ----
-fst :: (a,b) -> a <1>
-fst (x, y) = x 
+first :: (a,b) -> a <1>
+first (x, y) = x 
 
-snd:: (a,b) -> b
-snd (x, y) = y
+second :: (a,b) -> b
+second (x, y) = y
 ----
 <1> `a` und `b` sind polymorphe Typen
 
-Funktionen wie `fst` und `snd` nenn man *Polymorphe Funktionen*, da sie einen parametrischen Polymorphismus ermöglichen. Mit solchen Funktionen kann man weniger Code mit weniger Typfehleranfälligkeiten schreiben.
+Funktionen wie `first` und `second` nenn man *Polymorphe Funktionen*, da sie einen parametrischen Polymorphismus ermöglichen. Mit solchen Funktionen kann man weniger Code mit weniger Typfehleranfälligkeiten schreiben.
 
 ==== Typ Synonyme
 Mit dem Schlüsselwort `type` kann man einen Typ Synonym erstellen. Dieser ist kein neuer Typ, sondern nur ein neuer Name!
@@ -348,7 +348,7 @@ isDigit :: Char -> Bool
 isUpperCase :: Char -> Bool
 ----
 
-==== Type classes
+=== Type classes
 
 Typklassen sind vergleichbar mit Interfaces in Java oder C#. Wenn ein Typ Teil einer Typklasse ist, dann bedeutet das, dass gewisses Verhalten der Typklasse darin enthalten ist.
 
@@ -435,7 +435,7 @@ Wenn `T` der Typ der Elemente einer Liste ist, dann macht `[T]` es zu einer List
 === Funktionen auf Listen
 
 
-[cols="2,2,2", options="header"] 
+[cols="1,1,1", options="header"] 
 .Funktionen auf Listen: Einfache Bedingungen, Zugriff und Suche
 |===
 |Signatur
@@ -502,7 +502,7 @@ Die	Listenelemente	müssen	eine	Reihenfolge,	Ordnung	haben	(Ord).
 |===
 
 
-[cols="2,2,1", options="header"] 
+[cols="1,1,1", options="header"] 
 .Funktionen auf Listen: Transformieren und modifizieren der Liste
 |===
 |Signatur
