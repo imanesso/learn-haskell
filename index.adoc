@@ -29,23 +29,24 @@ Das Ziel dieses Dokuments ist es, zusammenzufassen, was ich über funktionale Pr
 
 === Wieso Funktionale Programmierung?
 
-Funktionale Programmierung ermöglicht es, kurzen deklarativen Programmcode zu schreiben, welcher nur Daten und Funktionen kennt und dafür keine Nebenwirkungen hat. Funktionen einer funktionalen Programmiersprache bekommen einen Input und generieren einen Output, der _nur_ vom Input abhängt und keine inneren Zustände kennt.
+Funktionale Programmierung ermöglicht es, kurzen deklarativen Programmcode zu schreiben, welcher nur Daten und Funktionen kennt und dafür keine Nebenwirkungen hat. Funktionen einer funktionalen Programmiersprache bekommen einen Input und generieren einen Output, der _nur_ vom Input abhängt und keine inneren Zustände kennt. Pure funktionale Programmierung kennt keine Zustande und veränderliche Daten und arbeitet stattdessen die ausschliesslich mit Funktionen.
 
-*Imperative Programmierung:*
+*Objektorientierte imperative Programmierung:*
 
 [source,java]
 ----
-var x; //Funktionen können mit den Daten machen, was sie wollen.
+var x; //Globale Variable
 
-f();
-g();
+//Schrittweise Instruktionen führen zum Ziel
+f(); //Daten können jegliche Zustände annehmen innehalb der Funktionen
+g(); 
 ----
 
 
-*Funktionale (deklarative) Programmierung:*
+*Funktionale deklarative Programmierung:*
 [source, haskell]
 ----
-g(f x); --Daten werden in einem Funktionsfluss transformiert
+g(f x); --Daten werden in einem Funktionsfluss transformiert, welcher nur von den Argumenten abhängt
 ----
 
 Es gibt einen Programmfluss, welcher durch eine Verkettung von Funktionen ensteht. Die Funktionen sind wie Maschienen, welche mit einem Input einen Output generieren.
@@ -261,7 +262,7 @@ data ToDo  = Stop | Wait | Go deriving (Show) <2>
 <2> Enum mit 3 Zuständen
 
 
-NOTE: `deriving (Show)` macht, dass die Werte als `String` zurückgegeben werden können
+NOTE: `deriving (Show)` macht, dass die Werte als `String` zurückgegeben werden können. Näheres dazu unter den Typklassen
 
 ==== Tuples
 Tuples sind aggregierte Typen, welche eine endliche Sequenz von Komponenten mit unterschiedlichen Typen beinhaltet.
@@ -323,12 +324,28 @@ Record Types sind neue eigene Typen die man definieren kann.
 data Person = Person { name :: String , age :: Int } deriving (Show)
 ----
 
+Dieser Record Type besteht aus folgenden Komponenten:
+
+* *Typ Constructor*: `data Person` definiert den Namen
+* *Value Constructor*: `Person` kreiert den Wert des Typs
+* *Components*: `{ name :: String , age :: Int }` definieren die Felder
+* *Deriving Clause*: `deriving (Show)` defniert Ableitung aus den Typklassen
+
+Mit dem Value Constructor kann man dann einen Wert mit dem Typ `Person` erstellen:
+
+[source,terminal]
+----
+ghci> Person "Hans" 65
+Person {name = "Hans", age = 65}
+----
+
 ==== Function Types
-Funktionen haben auch einen Typ. Es hat einen Typ für input parameter und für output parameter
+Funktionen haben auch einen Typ, der sich aus den Input- und Outputparametern zusammenstellt. In dem Beispiel unten zum Beispiel haben die beiden Funktionen denselben Typ!
 
 [source,haskell]
 ----
-functionname :: Inputtype -> Outputtype
+isDigit :: Char -> Bool
+isUpperCase :: Char -> Bool
 ----
 
 ==== Type classes
@@ -394,5 +411,177 @@ fromIntegral (length [1,2,3,4]) + 1.1 <2>
 
 <2> `fromIntegral` löst das Problem
 
+== Listen
+=== Was ist eine Liste?
+Eine Liste ist ein Sequenz von Elementen desselben Typs.
+Wenn `T` der Typ der Elemente einer Liste ist, dann macht `[T]` es zu einer Liste von diesem Typ.
+
+*Beispiele:*
+
+[source, haskell]
+----
+[1, 2, 3, 4] :: [Int]
+[True, True, False, True] :: [Bool]
+["Milk", "Bread", "Flakes"] :: [String]
+[sum, product] :: [ [Int] -> Int ]
+----
+
+=== Listenstruktur
+`['a', 'b', 'c']` wird übersetzt zu `'a' : ('b' : ('c' : []))`
+
+* *Cons* werden die ersten drei Elemente genannt
+* *Nil* wird das letzte leere Element genannt. Jede Liste endet mit Nil
+
+=== Funktionen auf Listen
+
+
+[cols="2,2,2", options="header"] 
+.Funktionen auf Listen: Einfache Bedingungen, Zugriff und Suche
+|===
+|Signatur
+|Beispiel
+|Beschreibung
+
+|`null :: [a] \-> Bool`
+|`null ['a','b','c']` ~> `False`
+
+`null []` ~> `True`
+|Gibt zurück, ob Liste leer ist oder nicht
+
+|`length ::	[a]	\->	Int`
+|`length [1,2,3]` ~> `3`
+|Gibt Länge einer Liste zurück
+
+|`elem	::	Eq	a	=>	a	->	[a]	->	Bool`
+|`elem	'a'	['a','b','c','d']`	~>	`True`
+
+`elem	'e'	['a','b','c','d']`	~>	`False`
+|Gibt	zurück,	ob	das	Element	in	der	Liste	beinhaltet	ist.
+Die	Listenelemente	müssen	vergleichbar	sein	(Eq).
+
+|`head ::	[a]	\->	a`
+|`head [1,2,3]` ~> `1`
+|Gibt das erste Element aus
+
+|`tail ::	[a]	\->	[a]`
+|`tail ['a','b','c','d']`	~>	`['b','c','d']`
+|Gibt	alle	ausser	das	erste	Element	zurück.	
+
+|`init ::	[a]	\->	[a]`
+|`init	['a','b','c','d']`	~>	`['a','b','c']`
+|Gibt	alle	ausser	das	letzte	Element	zurück.	
+
+|`last ::	[a]	\->	a`
+|`last	['a','b','c','d']`	~>	`'d'`
+|Gibt	das	letzte	Element	zurück.	
+
+|`(!!)	::	[a]	\->	Int	\->	a`
+|`['a','b','c','d']	!!	2`	~>	`'c'`
+
+|Gibt	das	Element anhand des Index zurück
+
+|`take	::	Int	\->	[a]	\->	[a]`
+|`take	3	['a','b','c','d','e']`	~>	`['a','b','c']`
+|Gibt	die	ersten	n	Elemente	zurück.
+
+|`drop	::	Int	\->	[a]	\->	[a]`
+|`drop	3	['a','b','c','d','e']`	~>	`['d','e']`
+|Gibt alle ausser	die	ersten	n	Elemente	zurück.
+
+|`maximum,	minimum	::	Ord	a	\=>	[a]	\->	a`
+|`maximum	[1,4,3]`	~>	`4`
+
+`minimum	[1,4,3]`	~>	`1`
+|Gibt	das	Maximum/Minimum	zurück.
+Die	Listenelemente	müssen	eine	Reihenfolge,	Ordnung	haben	(Ord).
+
+|`filter :: (a \-> Bool) \-> [a] \-> [a]`
+|`filter even [2, 3, 4]` ~> `[2,4]`
+|Gibt alle Elemente zurück, welche die Bedingung erfüllen
+
+|===
+
+
+[cols="2,2,1", options="header"] 
+.Funktionen auf Listen: Transformieren und modifizieren der Liste
+|===
+|Signatur
+|Beispiel
+|Beschreibung
+
+|`(:) :: a -> [a] \-> [a]`
+|`'a' : ['b', 'c']` ~> `['a', 'b', 'c']`
+
+|Fügt der Liste ein neues Element als Kopf an
+
+|`(++)	::	[a]	\->	[a]	\->	[a]`
+|`[1,2]	\++	[3,4,5]`	~>	`[1,2,3,4,5]`
+
+`"Hallo	"	++	show	12`	~>	`"Hallo	12"`
+|Hängt eine Liste an eine andere an
+
+|`reverse	::	[a]	\->	[a]`
+|`reverse	['a','b','c','d']`	~>	`['d','c','b','a']`
+|Dreht	eine	Liste	um.
+
+
+|`sum,	product	::	Num	a	\=>	[a]	\->	a`
+|`sum	[1,4,3]`	~>	`8`
+
+`product	[1,4,3]`	~>	`12`
+
+|Gibt	die	Summe/	das	Produkt	zurück.
+Die	Listenelemente	müssen	von	einem	Zahlen	Typen	sein	(Num).
+
+|`map :: (a -> b) -> [a] -> [b]`
+|`map length ["ha", "skel", "l" ]` ~> `[2,4,1]`
+|Transformiert jedes Element mit der übergebenen Funktion
+
+
+|`zip	::	[a]	\->	[b]	\->	[(a,b)]`
+|`zip	[1,2,3]	['a','b','c']`	~>	`[(1,'a'),(2,'b'),(3,'c')]`
+
+`zip	[1,2]	['a','b','c']`	~>	`[(1,'a'),(2,'b')]`
+|Nimmt	zwei	Listen	und	gibt	eine	Liste	mit	Tuples	zurück.
+Das	Resultat	hat	die	Länge	der	kürzeren	Input	Liste.
+
+|`concat	::	[[a]]	\->	[a]`
+|`concat	[[1],[2,3],[4]]`	~>	`[1,2,3,4]`
+
+`concat	["abc","def"]`	~>	`"abcdef"`
+
+|Nimmt	eine	Liste	von	Listen	und	konkateniert	diese.
+
+
+|`zipWith	::	(a	\->	b	\->	c)	\->	[a]	\->	[b]	\->	[c]`
+|`zipWith	(+)	[1,2,3]	[10,11,12]`	~>	`[11,13,15]`
+
+`zipWith	(++)	["Ha","Ec"]	["llo","ho"]`	~>	`["Hallo","Echo"]`
+|Nimmt zwei Listen und kombiniert jeweils zwei Elemente mit der
+übergebenen	Funktion.
+
+|===
+
+=== Pattern Matching
+Man kann auch mit dem Type Construktor Pattern Matching betreiben.
+Beispiele:
+
+[source, haskell]
+----
+stdMatch :: Show a => [a] -> String
+stdMatch [] = "Matched empty list"
+stdMatch (x:xs) = "Matched list with head " ++ show x
+----
+
+Mit Pattern Matching kann man zum Beispiel auch `head` und `tail` schreiben durch die Verwendung vonm Wildcard `_`:
+
+[source, haskell]
+----
+head (x:_)  = x
+tail (_:xs) = xs
+----
+
 == Quellen
 * http://learnyouahaskell.com/types-and-typeclasses
+* https://hackage.haskell.org/package/base-4.9.0.0/docs/Data-List.html
+
