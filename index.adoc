@@ -794,6 +794,20 @@ doSomething xs ys = if x < y then
 letNesting a = let b = 5 in
                 let c = 6 in
                   a + b + c
+
+--normal where clause
+cuboid :: Float -> Float -> Float -> Float
+cuboid l w h = base*2 + side*2 + front
+  where base = l*w
+        side = w*h
+        front = l*h
+
+--normal where clause
+cuboid' :: Float -> Float -> Float -> Float
+cuboid' l w h = let base = l*w
+                    side = w*h
+                    front = l*h
+                in base*2 + side*2 + front
 ----
 
 
