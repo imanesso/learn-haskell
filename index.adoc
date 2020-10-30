@@ -3,7 +3,7 @@
 :email: https://github.com/imanesso[@imanesso]
 v1.0, 2020-09-01
 // settings:
-:source-highlighter: rouge
+:source-highlighter: highlightjs
 :source-language: java,haskell
 :language: {source-language}
 :title: learn haskell
@@ -581,7 +581,224 @@ head (x:_)  = x
 tail (_:xs) = xs
 ----
 
+== Funktionen
+Unsere bisherige allgemeine Definition von Funktionen ist bisher nicht auf mehrere Definitionszeilen für das Pattern Matchin eingegangen, daher hier unsere neue Definition:
+
+[source, haskell]
+----
+name :: pType1 -> pType2 -> ... -> pTypeK -> ResultType
+name a1 b1 ... z1 = e1 --Resultexpression
+name a2 b2 ... z2 = e2 
+--...
+name ai bi ... zi = ei 
+----
+
+=== Pattern Matching
+Beim Pattern Matching versucht die linke Seite des `=` ein Muster der Parameter zu erstellen.
+Regeln:
+
+* Pattern werden von oben nach unten geprüft, daher sollte das oberste das spezialisierteste Pattern sein und das unterste das generellste.
+* Pattern können Parameterwerte aber auch Komponenten enthalten wie:
+  ** Konstanten `()` oder `[]`
+  ** Namen der Parameter wie `n`
+  ** Wildcard `_` passt immer
+  ** Strukturen wie `(x:xs)` oder tuple `(a,b)`
+  ** und weitere
+
+*Beispiele*
+
+[source, haskell]
+----
+sayNumber :: Int -> String -> String <1>
+sayNumber 0 s = "No " ++ s
+sayNumber 1 s = "One " ++ s
+sayNumber 2 s = "Another " ++ s
+sayNumber n s = "Many " ++ s ++ "s" --The most general pattern is at the bottom
+
+switchFirstTwo :: [a] -> [a] <2>
+switchFirstTwo [] = []
+switchFirstTwo [a] = [a]
+switchFirstTwo [a,b] = [b,a] --switch for list with exactly two elements
+switchFirstTwo (a:b:cs) = b:a:cs --switch for lists with length >2
+
+switchFirstTwo' :: [a] -> [a] <3> 
+switchFirstTwo' (a:b:cs) = b:a:cs 
+switchFirstTwo' as = as
+
+type Vec = (Int,Int) <4> --type introduced a new name for the tuple
+
+addVec :: Vec -> Vec -> Vec <4>
+addVec (ax, ay) (bx, by) = (ax + bx, ay + by) <5>
+----
+<1> Benennt eine Nummer .Der allgemeinste Fall für den Parameter `n` steht ganz un
+<2> Wechselt die ersten beiden Elemente einer Liste
+<3> Macht dasselbe wie bei Nummer zwei, aber direkt mit dem generellen Muster. `'` suggeriert, dass es diesselbe Funktion ist, aber mit einer anderen Implementation
+<4> Addiert zwei Vektoren miteinander
+
+
+=== Expressions
+Expressions sind die Ausdrücke nach dem `=` welche definieren, was die Funktion macht.
+Dafür haben wir einige Werkzeuge, welche wir hier anschauen:
+
+==== Case Expressions
+Case Expressions erlauben das Pattern Matching innerhalb der Case Expression nach folgendem Format:
+
+[source, haskell]
+----
+case expression of
+pattern -> result
+pattern -> result
+----
+
+Beispiel:
+[source, haskell]
+----
+describeList :: [a] -> String
+describeList xs = "The list is " ++ case xs of
+[] -> "empty."
+[x] -> "a singleton list."
+xs -> "a longer list."
+----
+
+==== Guards
+Für Strukturen mit komplexen Bedingungen kann kein Pattern Matching verwendet werden. Dafür benötigt man Guards.
+
+[source, haskell]
+----
+abs :: (Num a, Ord a) => a -> a
+abs n
+| n < 0 = -n
+| otherwise = n
+----
+
+==== Conditional Expressions
+Die klassische If - Else Konstruktion, welchse sie vielleicht aus anderen Programmiersprachen vermisst haben.
+In Haskell müssen alle Bedingungen eine Rückgabewert haben und der `Else`- Teil darf nicht ausgelassen werden.
+
+[source, haskell]
+----
+if a == b
+then "Eq"
+else "Not Eq"
+----
+
+Hier noch ein Beispiel, welches die `max` Funktion mit den bisherigen Mitteln implementiert
+[source, haskell]
+----
+--using guards
+max' :: Int -> Int -> Int 
+max' n m    | n < m = m
+            | otherwise = n
+
+--using conditional expressions
+max'' :: Int -> Int -> Int  
+max'' n m = if n < m then m else n
+
+--using case expressions
+max''' :: Int -> Int -> Int
+max''' n m = case n < m of
+                True -> m
+                False -> n
+----
+
+==== Where Bindings
+Where Bindings können verwendet werden, um Namen einzuführen innerhalb von Berechnungen für die Leserlichkeit.
+Sie bieten sich auch gut an für sich wiederholende Bedingungen in Guard Expression. 
+
+[source, haskell]
+----
+--Without where binding
+cylinder :: Float -> Float -> Float
+cylinder r h = 2 * pi * r * h + 2 * pi * r ^ 2
+
+--With where binding for readability
+cylinder' :: Float -> Float -> Float
+cylinder' r h = 2 * topArea + sideArea
+    where sideArea  = 2 * pi * r * h
+          topArea   = pi * r ^ 2
+
+--without where binding and with reoccuring condition
+brainpower :: Double -> Double -> String
+brainpower mentalAge age
+        | (mentalAge / age) * 100 < 85 = "lower than average"
+        | (mentalAge / age) * 100 < 115 = "average"
+        | (mentalAge / age) * 100 < 135 = "higher than average"
+        | otherwise = "gifted (top 1 %)"
+
+--With where binding to introduce name for reoccuring condition
+brainpower' :: Double -> Double -> String
+brainpower' mentalAge age
+        | iq < low  = "lower than average"
+        | iq < avg  = "average"
+        | iq < high = "higher than average"
+        | otherwise = "gifted (top 1 %)"
+      where iq  = (mentalAge / age) * 100
+          low   = 85
+          avg   = 115
+          high  = 135
+----
+
+Die Where Bindings können auch lokale Funktionen definieren:
+
+[source, haskell]
+----
+shoutName f l = shout f ++ " " ++ shout l
+  where shout s = map toUpper s
+----
+
+Pattern Matching kann auch im Where Ausdruck auf der linken Seite verwendet werden:
+
+[source, haskell]
+----
+--previous brainpower function
+where iq = (mentalAge / age) * 100
+  (low, avg, high) = (85, 115, 135)
+
+initials :: String -> String -> String
+initials firstname lastname = [f] ++ ". " ++ [l] ++ "."
+  where (f:_) = firstname
+        (l:_) = lastname
+----
+
+==== Let Expressions
+Where bindings sind innerhalt der gesamten Funktionsdefinition sichtbar. Wenn der Scope der definition kleiner sein soll, dann werden Let Expressions verwendet.
+
+Der definierte Name einer Let Expression ist nur im `in` Block sichtbar.
+
+[source, terminal]
+----
+ghci> 4 * (let a = 9 in a + 1) + 2
+42 
+----
+
+[source, haskell]
+----
+--let as a normal name definition like with where
+cylinder :: Float -> Float -> Float
+cylinder r h =
+      let sideArea  = 2 * pi * r * h
+        topArea     = pi * r ^2
+      in 2 * topArea + sideArea
+
+--combining where and let clauses can be very useful
+doSomething :: [Int] -> [Int] -> Int
+doSomething xs ys = if x < y then
+                      let (_:sx:_) = xs; (_:sy:_) = ys
+                      in sx + sy
+                    else
+                      x + y
+                    where
+                      (x:_) = xs; (y:_) = ys
+
+-- let nesting is also possible
+letNesting a = let b = 5 in
+                let c = 6 in
+                  a + b + c
+----
+
+
+
+
 == Quellen
 * http://learnyouahaskell.com/types-and-typeclasses
 * https://hackage.haskell.org/package/base-4.9.0.0/docs/Data-List.html
-
