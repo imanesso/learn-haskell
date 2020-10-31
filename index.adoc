@@ -3,7 +3,7 @@
 :email: https://github.com/imanesso[@imanesso]
 v1.0, 2020-09-01
 // settings:
-:source-highlighter: highlightjs
+:source-highlighter: rouge
 :source-language: java,haskell
 :language: {source-language}
 :title: learn haskell
@@ -161,7 +161,6 @@ Wenn das File geladen wurde, dann kann man die Funktion mit den Parametern folge
 
 == Typen
 
-=== Was ist ein Typ
 Daten sind einfach eine Menge von Bits, welche ohne korrekte Interpretation nutzlos sind. Typen geben diesen einfachen Bits Bedeutung.
 
 Typen stellen sicher, dass auf den Werten von Variablen keine Operationen ausgeführt werden, die syntaktisch oder semantisch fehlerhaft sind und dass diese Werte im definierten Wertebereich sind.
@@ -412,7 +411,6 @@ fromIntegral (length [1,2,3,4]) + 1.1 <2>
 <2> `fromIntegral` löst das Problem
 
 == Listen
-=== Was ist eine Liste?
 Eine Liste ist ein Sequenz von Elementen desselben Typs.
 Wenn `T` der Typ der Elemente einer Liste ist, dann macht `[T]` es zu einer Liste von diesem Typ.
 
@@ -810,9 +808,117 @@ cuboid' l w h = let base = l*w
                 in base*2 + side*2 + front
 ----
 
+=== Curried Functions
+Curried Functions sind Funktionen, welche mehrere Argumente haben und diese aufteilen in mehrere Funktionen mit einem Argument.
+
+Funktionen in Haskell übernehmen immer nur einen Parameter. Alle Funktionen die wir bisher gesehen haben, sind daher _Curried Functions_.
+
+Funktionstypen werden rechtsassotiativ angegeben und die Anwendung linksassoziativ (siehe Beispiel).
+
+[source, haskell]
+----
+ --type arrow '->' associates to the right
+addThree :: Int -> (Int -> (Int -> Int)) 
+
+-- application associates to the left
+addThree 1 2 3 == ((addThree 1) 2) 3
+----
+Bei der Anwendung wird zuerst 1 auf `addThree` angewendet, weil sie durch ein Leerzeichen getrennt sind. Das erzeugt eine Funktion, die einen Parameter nimmt und eine Funktion zurückgibt. Dann wird also 2 auf diese Funktion angewandt, was eine Funktion erzeugt, die einen Parameter nimmt und ihn mit 3 addiert.
+
+Dieses Currying kann auch aktiv genutzt werden, indem man Funktionen innerhalb anderer Funktionen als Vorkonfiguration ansieht
+
+[source, haskell]
+----
+let addTwoWith5 = addThree 5 <1>
+
+wrap :: String -> String -> String -> String 
+wrap pre post text = pre ++ text ++ post <2>
+
+h1Tag :: String -> String
+h1Tag = wrap "<h1>" "</h1>" <3>
+----
+<1> `addTwoWith5` addiert 2 Zahlen zu einer 5, dazu verwenden wir die vorherige Funktion
+<2> `wrap` verpackt einen Text mit einem Text vorne und hinten.
+<3> `h1Tag` verwendet `wrap` als Vorkonfiguration um den HTML-Tag zu verwenden. Angewendet könnte das zum Beispie so aussehen:
+`h1Tag "Hi"` ~> `"<h1>Hi</h1>"`
+
+=== Lambda Expressions
+Bei Lambda Expressions geht es darum Funktionen anonym zu definieren, also ohne Namen. Kleine Funktionen die kann man auch an Ort un Stelle definieren. 
+
+Lambda Expressions haben immer den Aufbau: `\p \-> e `
+* `\p` ist der parameter
+* `e` ist der Ausdruck basierend auf den Parametern
+
+Beispiel:
+
+[source, haskell]
+----
+inc :: Int -> Int
+inc x = x + 1 --short and only used once
+
+incAll :: [Int] -> [Int]
+incAll xs = map inc xs
+
+incAll' :: [Int] -> [Int]
+incAll' xs = map (\x -> x + 1) xs --same function, but with lambda expression
+----
+
+=== Higher Order Functions
+Funktionen können Funktionen als Rückgabetypen haben, aber auch als Parameter.
+Funktionen, welche andere Funktionen als Input oder Output haben, werden _Higher Order Functions_ bezeichnet.
+
+Higher Order Functions kann man als Pipeline aufbauen, wenn die Typen übereinstimmen.
+Wenn zum Beispiel der Output einer Funktion `f` gleich dem Input einer zweiten Funktion `g` ist, dann kann man es als Pipeline mit dem `.` schreiben:
+
+[source, haskell]
+----
+f :: a -> b
+g :: b -> c
+g . f --Application as pipeline
+----
+
+Hier ein fortgeschritteneres Beispiel zuerst mit Lambda Expressions, dann mit `.`
+[source, terminal]
+----
+>ghci map (\xs -> negate (sum (tail xs))) [[1,2,3],[4,5,6],[7,8]]
+[-5,-11,-8]
+
+>ghci map (negate . sum . tail) [[1,2,3],[4,5,6],[7,8]]
+[-5,-11,-8]
+----
+
+=== Operatoren
+Operatoren sind Funktionen, welche zwischen den Argumenten geschrieben werden können (infix) und aus den Zeichen `!#$%&*+./<=>?@\^|-~` bestehen. 
+
+Bei der Definition einer Operator-Funktion muss man Klammern verwenden:
+[source, haskell]
+----
+(|+|) :: Int -> Int -> Int
+a |+| b = abs a + abs b
+----
+
+Klammern benötigt man auch, wenn man Operatoren als normale Funktion verwenden möchte.
+Normale Funktionen können infix verwendet werden, wenn man Backticks verwendet.
+[source, terminal]
+----
+>ghci 2 `add` 1
+3
+>ghci (+) 2 1
+3
+----
+
+Bei einer Aneinanderreihung werden Operatorenregeln wie Punkt vor Strich mit sogenannten *Fixity Declarations* behandelt.
+
+== Recursion
+Alsbezeichnet man den abstrakten Vorgang, dass Regeln auf ein Produkt, das sie selbst erzeugt haben, von neuem angewandt werden wie die bekannten russischen Puppen oder dieses Bild hier:
+
+image::recursion.gif[Recursion,50%]
+
+
 
 
 
 == Quellen
 * http://learnyouahaskell.com/types-and-typeclasses
+* http://learnyouahaskell.com/higher-order-functions
 * https://hackage.haskell.org/package/base-4.9.0.0/docs/Data-List.html

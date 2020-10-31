@@ -462,20 +462,29 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_typen">3. Typen</a>
 <ul class="sectlevel2">
-<li><a href="#_was_ist_ein_typ">3.1. Was ist ein Typ</a></li>
-<li><a href="#_typen_2">3.2. Typen</a></li>
-<li><a href="#_type_classes">3.3. Type classes</a></li>
+<li><a href="#_typen_2">3.1. Typen</a></li>
+<li><a href="#_type_classes">3.2. Type classes</a></li>
 </ul>
 </li>
 <li><a href="#_listen">4. Listen</a>
 <ul class="sectlevel2">
-<li><a href="#_was_ist_eine_liste">4.1. Was ist eine Liste?</a></li>
-<li><a href="#_listenstruktur">4.2. Listenstruktur</a></li>
-<li><a href="#_funktionen_auf_listen">4.3. Funktionen auf Listen</a></li>
-<li><a href="#_pattern_matching">4.4. Pattern Matching</a></li>
+<li><a href="#_listenstruktur">4.1. Listenstruktur</a></li>
+<li><a href="#_funktionen_auf_listen">4.2. Funktionen auf Listen</a></li>
+<li><a href="#_pattern_matching">4.3. Pattern Matching</a></li>
 </ul>
 </li>
-<li><a href="#_quellen">5. Quellen</a></li>
+<li><a href="#_funktionen">5. Funktionen</a>
+<ul class="sectlevel2">
+<li><a href="#_pattern_matching_2">5.1. Pattern Matching</a></li>
+<li><a href="#_expressions">5.2. Expressions</a></li>
+<li><a href="#_curried_functions">5.3. Curried Functions</a></li>
+<li><a href="#_lambda_expressions">5.4. Lambda Expressions</a></li>
+<li><a href="#_higher_order_functions">5.5. Higher Order Functions</a></li>
+<li><a href="#_operatoren">5.6. Operatoren</a></li>
+</ul>
+</li>
+<li><a href="#_recursion">6. Recursion</a></li>
+<li><a href="#_quellen">7. Quellen</a></li>
 </ul>
 </div>
 </div>
@@ -671,8 +680,6 @@ Dieses File kann man in die ghci laden mit dem Befehl <code>ghci Mathe.hs</code>
 <div class="sect1">
 <h2 id="_typen">3. Typen</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_was_ist_ein_typ">3.1. Was ist ein Typ</h3>
 <div class="paragraph">
 <p>Daten sind einfach eine Menge von Bits, welche ohne korrekte Interpretation nutzlos sind. Typen geben diesen einfachen Bits Bedeutung.</p>
 </div>
@@ -760,9 +767,8 @@ Mit <code>:t</code> kann man in der ghci den Typ eines Ausdrucks herausfinden. z
 </tr>
 </tbody>
 </table>
-</div>
 <div class="sect2">
-<h3 id="_typen_2">3.2. Typen</h3>
+<h3 id="_typen_2">3.1. Typen</h3>
 <div class="sect3">
 <h4 id="_basic_types">Basic Types</h4>
 <table class="tableblock frame-all grid-all stretch">
@@ -982,7 +988,7 @@ Zugreifen kann man mittels Pattern Matching. Darauf wird später eingegangen.</p
 </div>
 </div>
 <div class="sect2">
-<h3 id="_type_classes">3.3. Type classes</h3>
+<h3 id="_type_classes">3.2. Type classes</h3>
 <div class="paragraph">
 <p>Typklassen sind vergleichbar mit Interfaces in Java oder C#. Wenn ein Typ Teil einer Typklasse ist, dann bedeutet das, dass gewisses Verhalten der Typklasse darin enthalten ist.</p>
 </div>
@@ -1169,8 +1175,6 @@ Haskell konvertiert Zahlentypen nicht automatisch
 <div class="sect1">
 <h2 id="_listen">4. Listen</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_was_ist_eine_liste">4.1. Was ist eine Liste?</h3>
 <div class="paragraph">
 <p>Eine Liste ist ein Sequenz von Elementen desselben Typs.
 Wenn <code>T</code> der Typ der Elemente einer Liste ist, dann macht <code>[T]</code> es zu einer Liste von diesem Typ.</p>
@@ -1186,9 +1190,8 @@ Wenn <code>T</code> der Typ der Elemente einer Liste ist, dann macht <code>[T]</
 <span class="p">[</span><span class="n">sum</span><span class="p">,</span> <span class="n">product</span><span class="p">]</span> <span class="o">::</span> <span class="p">[</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="p">]</span></code></pre>
 </div>
 </div>
-</div>
 <div class="sect2">
-<h3 id="_listenstruktur">4.2. Listenstruktur</h3>
+<h3 id="_listenstruktur">4.1. Listenstruktur</h3>
 <div class="paragraph">
 <p><code>['a', 'b', 'c']</code> wird übersetzt zu <code>'a' : ('b' : ('c' : []))</code></p>
 </div>
@@ -1204,7 +1207,7 @@ Wenn <code>T</code> der Typ der Elemente einer Liste ist, dann macht <code>[T]</
 </div>
 </div>
 <div class="sect2">
-<h3 id="_funktionen_auf_listen">4.3. Funktionen auf Listen</h3>
+<h3 id="_funktionen_auf_listen">4.2. Funktionen auf Listen</h3>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 4. Funktionen auf Listen: Einfache Bedingungen, Zugriff und Suche</caption>
 <colgroup>
@@ -1354,7 +1357,7 @@ Das	Resultat	hat	die	Länge	der	kürzeren	Input	Liste.</p></td>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_pattern_matching">4.4. Pattern Matching</h3>
+<h3 id="_pattern_matching">4.3. Pattern Matching</h3>
 <div class="paragraph">
 <p>Man kann auch mit dem Type Construktor Pattern Matching betreiben.
 Beispiele:</p>
@@ -1379,12 +1382,468 @@ Beispiele:</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_quellen">5. Quellen</h2>
+<h2 id="_funktionen">5. Funktionen</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Unsere bisherige allgemeine Definition von Funktionen ist bisher nicht auf mehrere Definitionszeilen für das Pattern Matchin eingegangen, daher hier unsere neue Definition:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="n">name</span> <span class="o">::</span> <span class="n">pType1</span> <span class="o">-&gt;</span> <span class="n">pType2</span> <span class="o">-&gt;</span> <span class="o">...</span> <span class="o">-&gt;</span> <span class="n">pTypeK</span> <span class="o">-&gt;</span> <span class="kt">ResultType</span>
+<span class="n">name</span> <span class="n">a1</span> <span class="n">b1</span> <span class="o">...</span> <span class="n">z1</span> <span class="o">=</span> <span class="n">e1</span> <span class="c1">--Resultexpression</span>
+<span class="n">name</span> <span class="n">a2</span> <span class="n">b2</span> <span class="o">...</span> <span class="n">z2</span> <span class="o">=</span> <span class="n">e2</span>
+<span class="o">--...</span>
+<span class="n">name</span> <span class="n">ai</span> <span class="n">bi</span> <span class="o">...</span> <span class="n">zi</span> <span class="o">=</span> <span class="n">ei</span></code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pattern_matching_2">5.1. Pattern Matching</h3>
+<div class="paragraph">
+<p>Beim Pattern Matching versucht die linke Seite des <code>=</code> ein Muster der Parameter zu erstellen.
+Regeln:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Pattern werden von oben nach unten geprüft, daher sollte das oberste das spezialisierteste Pattern sein und das unterste das generellste.</p>
+</li>
+<li>
+<p>Pattern können Parameterwerte aber auch Komponenten enthalten wie:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Konstanten <code>()</code> oder <code>[]</code></p>
+</li>
+<li>
+<p>Namen der Parameter wie <code>n</code></p>
+</li>
+<li>
+<p>Wildcard <code>_</code> passt immer</p>
+</li>
+<li>
+<p>Strukturen wie <code>(x:xs)</code> oder tuple <code>(a,b)</code></p>
+</li>
+<li>
+<p>und weitere</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Beispiele</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="n">sayNumber</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="o">-&gt;</span> <span class="kt">String</span> <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="n">sayNumber</span> <span class="mi">0</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"No "</span> <span class="o">++</span> <span class="n">s</span>
+<span class="n">sayNumber</span> <span class="mi">1</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"One "</span> <span class="o">++</span> <span class="n">s</span>
+<span class="n">sayNumber</span> <span class="mi">2</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"Another "</span> <span class="o">++</span> <span class="n">s</span>
+<span class="n">sayNumber</span> <span class="n">n</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"Many "</span> <span class="o">++</span> <span class="n">s</span> <span class="o">++</span> <span class="s">"s"</span> <span class="c1">--The most general pattern is at the bottom</span>
+
+<span class="n">switchFirstTwo</span> <span class="o">::</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <i class="conum" data-value="2"></i><b>(2)</b>
+<span class="n">switchFirstTwo</span> <span class="kt">[]</span> <span class="o">=</span> <span class="kt">[]</span>
+<span class="n">switchFirstTwo</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span>
+<span class="n">switchFirstTwo</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="p">]</span> <span class="c1">--switch for list with exactly two elements</span>
+<span class="n">switchFirstTwo</span> <span class="p">(</span><span class="n">a</span><span class="o">:</span><span class="n">b</span><span class="o">:</span><span class="n">cs</span><span class="p">)</span> <span class="o">=</span> <span class="n">b</span><span class="o">:</span><span class="n">a</span><span class="o">:</span><span class="n">cs</span> <span class="c1">--switch for lists with length &gt;2</span>
+
+<span class="n">switchFirstTwo'</span> <span class="o">::</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <i class="conum" data-value="3"></i><b>(3)</b>
+<span class="n">switchFirstTwo'</span> <span class="p">(</span><span class="n">a</span><span class="o">:</span><span class="n">b</span><span class="o">:</span><span class="n">cs</span><span class="p">)</span> <span class="o">=</span> <span class="n">b</span><span class="o">:</span><span class="n">a</span><span class="o">:</span><span class="n">cs</span>
+<span class="n">switchFirstTwo'</span> <span class="n">as</span> <span class="o">=</span> <span class="n">as</span>
+
+<span class="kr">type</span> <span class="kt">Vec</span> <span class="o">=</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span><span class="kt">Int</span><span class="p">)</span> <span class="o">&lt;</span><span class="mi">4</span><span class="o">&gt;</span> <span class="c1">--type introduced a new name for the tuple</span>
+
+<span class="n">addVec</span> <span class="o">::</span> <span class="kt">Vec</span> <span class="o">-&gt;</span> <span class="kt">Vec</span> <span class="o">-&gt;</span> <span class="kt">Vec</span> <i class="conum" data-value="4"></i><b>(4)</b>
+<span class="n">addVec</span> <span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">ay</span><span class="p">)</span> <span class="p">(</span><span class="n">bx</span><span class="p">,</span> <span class="n">by</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">ax</span> <span class="o">+</span> <span class="n">bx</span><span class="p">,</span> <span class="n">ay</span> <span class="o">+</span> <span class="n">by</span><span class="p">)</span> <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Benennt eine Nummer .Der allgemeinste Fall für den Parameter <code>n</code> steht ganz un</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Wechselt die ersten beiden Elemente einer Liste</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Macht dasselbe wie bei Nummer zwei, aber direkt mit dem generellen Muster. <code>'</code> suggeriert, dass es diesselbe Funktion ist, aber mit einer anderen Implementation</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Addiert zwei Vektoren miteinander</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_expressions">5.2. Expressions</h3>
+<div class="paragraph">
+<p>Expressions sind die Ausdrücke nach dem <code>=</code> welche definieren, was die Funktion macht.
+Dafür haben wir einige Werkzeuge, welche wir hier anschauen:</p>
+</div>
+<div class="sect3">
+<h4 id="_case_expressions">Case Expressions</h4>
+<div class="paragraph">
+<p>Case Expressions erlauben das Pattern Matching innerhalb der Case Expression nach folgendem Format:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="kr">case</span> <span class="n">expression</span> <span class="kr">of</span>
+<span class="n">pattern</span> <span class="o">-&gt;</span> <span class="n">result</span>
+<span class="n">pattern</span> <span class="o">-&gt;</span> <span class="n">result</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Beispiel:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="n">describeList</span> <span class="o">::</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+<span class="n">describeList</span> <span class="n">xs</span> <span class="o">=</span> <span class="s">"The list is "</span> <span class="o">++</span> <span class="kr">case</span> <span class="n">xs</span> <span class="kr">of</span>
+<span class="kt">[]</span> <span class="o">-&gt;</span> <span class="s">"empty."</span>
+<span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="s">"a singleton list."</span>
+<span class="n">xs</span> <span class="o">-&gt;</span> <span class="s">"a longer list."</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_guards">Guards</h4>
+<div class="paragraph">
+<p>Für Strukturen mit komplexen Bedingungen kann kein Pattern Matching verwendet werden. Dafür benötigt man Guards.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="n">abs</span> <span class="o">::</span> <span class="p">(</span><span class="kt">Num</span> <span class="n">a</span><span class="p">,</span> <span class="kt">Ord</span> <span class="n">a</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">a</span>
+<span class="n">abs</span> <span class="n">n</span>
+<span class="o">|</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">=</span> <span class="o">-</span><span class="n">n</span>
+<span class="o">|</span> <span class="n">otherwise</span> <span class="o">=</span> <span class="n">n</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_conditional_expressions">Conditional Expressions</h4>
+<div class="paragraph">
+<p>Die klassische If - Else Konstruktion, welchse sie vielleicht aus anderen Programmiersprachen vermisst haben.
+In Haskell müssen alle Bedingungen eine Rückgabewert haben und der <code>Else</code>- Teil darf nicht ausgelassen werden.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="kr">if</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span>
+<span class="kr">then</span> <span class="s">"Eq"</span>
+<span class="kr">else</span> <span class="s">"Not Eq"</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Hier noch ein Beispiel, welches die <code>max</code> Funktion mit den bisherigen Mitteln implementiert</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="c1">--using guards</span>
+<span class="n">max'</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">max'</span> <span class="n">n</span> <span class="n">m</span>    <span class="o">|</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="o">=</span> <span class="n">m</span>
+            <span class="o">|</span> <span class="n">otherwise</span> <span class="o">=</span> <span class="n">n</span>
+
+<span class="c1">--using conditional expressions</span>
+<span class="n">max''</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">max''</span> <span class="n">n</span> <span class="n">m</span> <span class="o">=</span> <span class="kr">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="kr">then</span> <span class="n">m</span> <span class="kr">else</span> <span class="n">n</span>
+
+<span class="c1">--using case expressions</span>
+<span class="n">max'''</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">max'''</span> <span class="n">n</span> <span class="n">m</span> <span class="o">=</span> <span class="kr">case</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="kr">of</span>
+                <span class="kt">True</span> <span class="o">-&gt;</span> <span class="n">m</span>
+                <span class="kt">False</span> <span class="o">-&gt;</span> <span class="n">n</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_where_bindings">Where Bindings</h4>
+<div class="paragraph">
+<p>Where Bindings können verwendet werden, um Namen einzuführen innerhalb von Berechnungen für die Leserlichkeit.
+Sie bieten sich auch gut an für sich wiederholende Bedingungen in Guard Expression.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="c1">--Without where binding</span>
+<span class="n">cylinder</span> <span class="o">::</span> <span class="kt">Float</span> <span class="o">-&gt;</span> <span class="kt">Float</span> <span class="o">-&gt;</span> <span class="kt">Float</span>
+<span class="n">cylinder</span> <span class="n">r</span> <span class="n">h</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">h</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">r</span> <span class="o">^</span> <span class="mi">2</span>
+
+<span class="c1">--With where binding for readability</span>
+<span class="n">cylinder'</span> <span class="o">::</span> <span class="kt">Float</span> <span class="o">-&gt;</span> <span class="kt">Float</span> <span class="o">-&gt;</span> <span class="kt">Float</span>
+<span class="n">cylinder'</span> <span class="n">r</span> <span class="n">h</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">topArea</span> <span class="o">+</span> <span class="n">sideArea</span>
+    <span class="kr">where</span> <span class="n">sideArea</span>  <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">h</span>
+          <span class="n">topArea</span>   <span class="o">=</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">r</span> <span class="o">^</span> <span class="mi">2</span>
+
+<span class="c1">--without where binding and with reoccuring condition</span>
+<span class="n">brainpower</span> <span class="o">::</span> <span class="kt">Double</span> <span class="o">-&gt;</span> <span class="kt">Double</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+<span class="n">brainpower</span> <span class="n">mentalAge</span> <span class="n">age</span>
+        <span class="o">|</span> <span class="p">(</span><span class="n">mentalAge</span> <span class="o">/</span> <span class="n">age</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">&lt;</span> <span class="mi">85</span> <span class="o">=</span> <span class="s">"lower than average"</span>
+        <span class="o">|</span> <span class="p">(</span><span class="n">mentalAge</span> <span class="o">/</span> <span class="n">age</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">&lt;</span> <span class="mi">115</span> <span class="o">=</span> <span class="s">"average"</span>
+        <span class="o">|</span> <span class="p">(</span><span class="n">mentalAge</span> <span class="o">/</span> <span class="n">age</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">&lt;</span> <span class="mi">135</span> <span class="o">=</span> <span class="s">"higher than average"</span>
+        <span class="o">|</span> <span class="n">otherwise</span> <span class="o">=</span> <span class="s">"gifted (top 1 %)"</span>
+
+<span class="c1">--With where binding to introduce name for reoccuring condition</span>
+<span class="n">brainpower'</span> <span class="o">::</span> <span class="kt">Double</span> <span class="o">-&gt;</span> <span class="kt">Double</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+<span class="n">brainpower'</span> <span class="n">mentalAge</span> <span class="n">age</span>
+        <span class="o">|</span> <span class="n">iq</span> <span class="o">&lt;</span> <span class="n">low</span>  <span class="o">=</span> <span class="s">"lower than average"</span>
+        <span class="o">|</span> <span class="n">iq</span> <span class="o">&lt;</span> <span class="n">avg</span>  <span class="o">=</span> <span class="s">"average"</span>
+        <span class="o">|</span> <span class="n">iq</span> <span class="o">&lt;</span> <span class="n">high</span> <span class="o">=</span> <span class="s">"higher than average"</span>
+        <span class="o">|</span> <span class="n">otherwise</span> <span class="o">=</span> <span class="s">"gifted (top 1 %)"</span>
+      <span class="kr">where</span> <span class="n">iq</span>  <span class="o">=</span> <span class="p">(</span><span class="n">mentalAge</span> <span class="o">/</span> <span class="n">age</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+          <span class="n">low</span>   <span class="o">=</span> <span class="mi">85</span>
+          <span class="n">avg</span>   <span class="o">=</span> <span class="mi">115</span>
+          <span class="n">high</span>  <span class="o">=</span> <span class="mi">135</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Die Where Bindings können auch lokale Funktionen definieren:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="n">shoutName</span> <span class="n">f</span> <span class="n">l</span> <span class="o">=</span> <span class="n">shout</span> <span class="n">f</span> <span class="o">++</span> <span class="s">" "</span> <span class="o">++</span> <span class="n">shout</span> <span class="n">l</span>
+  <span class="kr">where</span> <span class="n">shout</span> <span class="n">s</span> <span class="o">=</span> <span class="n">map</span> <span class="n">toUpper</span> <span class="n">s</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Pattern Matching kann auch im Where Ausdruck auf der linken Seite verwendet werden:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="c1">--previous brainpower function</span>
+<span class="kr">where</span> <span class="n">iq</span> <span class="o">=</span> <span class="p">(</span><span class="n">mentalAge</span> <span class="o">/</span> <span class="n">age</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+  <span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">avg</span><span class="p">,</span> <span class="n">high</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="mi">85</span><span class="p">,</span> <span class="mi">115</span><span class="p">,</span> <span class="mi">135</span><span class="p">)</span>
+
+<span class="n">initials</span> <span class="o">::</span> <span class="kt">String</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+<span class="n">initials</span> <span class="n">firstname</span> <span class="n">lastname</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">]</span> <span class="o">++</span> <span class="s">". "</span> <span class="o">++</span> <span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">++</span> <span class="s">"."</span>
+  <span class="kr">where</span> <span class="p">(</span><span class="n">f</span><span class="o">:</span><span class="kr">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">firstname</span>
+        <span class="p">(</span><span class="n">l</span><span class="o">:</span><span class="kr">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">lastname</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_let_expressions">Let Expressions</h4>
+<div class="paragraph">
+<p>Where bindings sind innerhalt der gesamten Funktionsdefinition sichtbar. Wenn der Scope der definition kleiner sein soll, dann werden Let Expressions verwendet.</p>
+</div>
+<div class="paragraph">
+<p>Der definierte Name einer Let Expression ist nur im <code>in</code> Block sichtbar.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="terminal"><span class="gp">ghci&gt;</span><span class="w"> </span>4 <span class="k">*</span> <span class="o">(</span><span class="nb">let </span>a <span class="o">=</span> 9 <span class="k">in </span>a + 1<span class="o">)</span> + 2
+<span class="go">42</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="c1">--let as a normal name definition like with where</span>
+<span class="n">cylinder</span> <span class="o">::</span> <span class="kt">Float</span> <span class="o">-&gt;</span> <span class="kt">Float</span> <span class="o">-&gt;</span> <span class="kt">Float</span>
+<span class="n">cylinder</span> <span class="n">r</span> <span class="n">h</span> <span class="o">=</span>
+      <span class="kr">let</span> <span class="n">sideArea</span>  <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">h</span>
+        <span class="n">topArea</span>     <span class="o">=</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">r</span> <span class="o">^</span><span class="mi">2</span>
+      <span class="kr">in</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">topArea</span> <span class="o">+</span> <span class="n">sideArea</span>
+
+<span class="c1">--combining where and let clauses can be very useful</span>
+<span class="n">doSomething</span> <span class="o">::</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">doSomething</span> <span class="n">xs</span> <span class="n">ys</span> <span class="o">=</span> <span class="kr">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">y</span> <span class="kr">then</span>
+                      <span class="kr">let</span> <span class="p">(</span><span class="kr">_</span><span class="o">:</span><span class="n">sx</span><span class="o">:</span><span class="kr">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">xs</span><span class="p">;</span> <span class="p">(</span><span class="kr">_</span><span class="o">:</span><span class="n">sy</span><span class="o">:</span><span class="kr">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">ys</span>
+                      <span class="kr">in</span> <span class="n">sx</span> <span class="o">+</span> <span class="n">sy</span>
+                    <span class="kr">else</span>
+                      <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+                    <span class="kr">where</span>
+                      <span class="p">(</span><span class="n">x</span><span class="o">:</span><span class="kr">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">xs</span><span class="p">;</span> <span class="p">(</span><span class="n">y</span><span class="o">:</span><span class="kr">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">ys</span>
+
+<span class="c1">-- let nesting is also possible</span>
+<span class="n">letNesting</span> <span class="n">a</span> <span class="o">=</span> <span class="kr">let</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">5</span> <span class="kr">in</span>
+                <span class="kr">let</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">6</span> <span class="kr">in</span>
+                  <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span>
+
+<span class="c1">--normal where clause</span>
+<span class="n">cuboid</span> <span class="o">::</span> <span class="kt">Float</span> <span class="o">-&gt;</span> <span class="kt">Float</span> <span class="o">-&gt;</span> <span class="kt">Float</span> <span class="o">-&gt;</span> <span class="kt">Float</span>
+<span class="n">cuboid</span> <span class="n">l</span> <span class="n">w</span> <span class="n">h</span> <span class="o">=</span> <span class="n">base</span><span class="o">*</span><span class="mi">2</span> <span class="o">+</span> <span class="n">side</span><span class="o">*</span><span class="mi">2</span> <span class="o">+</span> <span class="n">front</span>
+  <span class="kr">where</span> <span class="n">base</span> <span class="o">=</span> <span class="n">l</span><span class="o">*</span><span class="n">w</span>
+        <span class="n">side</span> <span class="o">=</span> <span class="n">w</span><span class="o">*</span><span class="n">h</span>
+        <span class="n">front</span> <span class="o">=</span> <span class="n">l</span><span class="o">*</span><span class="n">h</span>
+
+<span class="c1">--normal where clause</span>
+<span class="n">cuboid'</span> <span class="o">::</span> <span class="kt">Float</span> <span class="o">-&gt;</span> <span class="kt">Float</span> <span class="o">-&gt;</span> <span class="kt">Float</span> <span class="o">-&gt;</span> <span class="kt">Float</span>
+<span class="n">cuboid'</span> <span class="n">l</span> <span class="n">w</span> <span class="n">h</span> <span class="o">=</span> <span class="kr">let</span> <span class="n">base</span> <span class="o">=</span> <span class="n">l</span><span class="o">*</span><span class="n">w</span>
+                    <span class="n">side</span> <span class="o">=</span> <span class="n">w</span><span class="o">*</span><span class="n">h</span>
+                    <span class="n">front</span> <span class="o">=</span> <span class="n">l</span><span class="o">*</span><span class="n">h</span>
+                <span class="kr">in</span> <span class="n">base</span><span class="o">*</span><span class="mi">2</span> <span class="o">+</span> <span class="n">side</span><span class="o">*</span><span class="mi">2</span> <span class="o">+</span> <span class="n">front</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_curried_functions">5.3. Curried Functions</h3>
+<div class="paragraph">
+<p>Curried Functions sind Funktionen, welche mehrere Argumente haben und diese aufteilen in mehrere Funktionen mit einem Argument.</p>
+</div>
+<div class="paragraph">
+<p>Funktionen in Haskell übernehmen immer nur einen Parameter. Alle Funktionen die wir bisher gesehen haben, sind daher <em>Curried Functions</em>.</p>
+</div>
+<div class="paragraph">
+<p>Funktionstypen werden rechtsassotiativ angegeben und die Anwendung linksassoziativ (siehe Beispiel).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"> <span class="c1">--type arrow '-&gt;' associates to the right</span>
+<span class="n">addThree</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="kt">Int</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span><span class="p">))</span>
+
+<span class="c1">-- application associates to the left</span>
+<span class="n">addThree</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="o">==</span> <span class="p">((</span><span class="n">addThree</span> <span class="mi">1</span><span class="p">)</span> <span class="mi">2</span><span class="p">)</span> <span class="mi">3</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Bei der Anwendung wird zuerst 1 auf <code>addThree</code> angewendet, weil sie durch ein Leerzeichen getrennt sind. Das erzeugt eine Funktion, die einen Parameter nimmt und eine Funktion zurückgibt. Dann wird also 2 auf diese Funktion angewandt, was eine Funktion erzeugt, die einen Parameter nimmt und ihn mit 3 addiert.</p>
+</div>
+<div class="paragraph">
+<p>Dieses Currying kann auch aktiv genutzt werden, indem man Funktionen innerhalb anderer Funktionen als Vorkonfiguration ansieht</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="kr">let</span> <span class="n">addTwoWith5</span> <span class="o">=</span> <span class="n">addThree</span> <span class="mi">5</span> <i class="conum" data-value="1"></i><b>(1)</b>
+
+<span class="n">wrap</span> <span class="o">::</span> <span class="kt">String</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="o">-&gt;</span> <span class="kt">String</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+<span class="n">wrap</span> <span class="n">pre</span> <span class="n">post</span> <span class="n">text</span> <span class="o">=</span> <span class="n">pre</span> <span class="o">++</span> <span class="n">text</span> <span class="o">++</span> <span class="n">post</span> <i class="conum" data-value="2"></i><b>(2)</b>
+
+<span class="n">h1Tag</span> <span class="o">::</span> <span class="kt">String</span> <span class="o">-&gt;</span> <span class="kt">String</span>
+<span class="n">h1Tag</span> <span class="o">=</span> <span class="n">wrap</span> <span class="s">"&lt;h1&gt;"</span> <span class="s">"&lt;/h1&gt;"</span> <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>addTwoWith5</code> addiert 2 Zahlen zu einer 5, dazu verwenden wir die vorherige Funktion</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>wrap</code> verpackt einen Text mit einem Text vorne und hinten.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><code>h1Tag</code> verwendet <code>wrap</code> als Vorkonfiguration um den HTML-Tag zu verwenden. Angewendet könnte das zum Beispie so aussehen:
+<code>h1Tag "Hi"</code> ~&gt; <code>"&lt;h1&gt;Hi&lt;/h1&gt;"</code></td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_lambda_expressions">5.4. Lambda Expressions</h3>
+<div class="paragraph">
+<p>Bei Lambda Expressions geht es darum Funktionen anonym zu definieren, also ohne Namen. Kleine Funktionen die kann man auch an Ort un Stelle definieren.</p>
+</div>
+<div class="paragraph">
+<p>Lambda Expressions haben immer den Aufbau: <code>\p -&gt; e `
+* `\p</code> ist der parameter
+* <code>e</code> ist der Ausdruck basierend auf den Parametern</p>
+</div>
+<div class="paragraph">
+<p>Beispiel:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="n">inc</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">inc</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1">--short and only used once</span>
+
+<span class="n">incAll</span> <span class="o">::</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span>
+<span class="n">incAll</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">map</span> <span class="n">inc</span> <span class="n">xs</span>
+
+<span class="n">incAll'</span> <span class="o">::</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span>
+<span class="n">incAll'</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">map</span> <span class="p">(</span><span class="nf">\</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="n">xs</span> <span class="c1">--same function, but with lambda expression</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_higher_order_functions">5.5. Higher Order Functions</h3>
+<div class="paragraph">
+<p>Funktionen können Funktionen als Rückgabetypen haben, aber auch als Parameter.
+Funktionen, welche andere Funktionen als Input oder Output haben, werden <em>Higher Order Functions</em> bezeichnet.</p>
+</div>
+<div class="paragraph">
+<p>Higher Order Functions kann man als Pipeline aufbauen, wenn die Typen übereinstimmen.
+Wenn zum Beispiel der Output einer Funktion <code>f</code> gleich dem Input einer zweiten Funktion <code>g</code> ist, dann kann man es als Pipeline mit dem <code>.</code> schreiben:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="n">f</span> <span class="o">::</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">b</span>
+<span class="n">g</span> <span class="o">::</span> <span class="n">b</span> <span class="o">-&gt;</span> <span class="n">c</span>
+<span class="n">g</span> <span class="o">.</span> <span class="n">f</span> <span class="c1">--Application as pipeline</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Hier ein fortgeschritteneres Beispiel zuerst mit Lambda Expressions, dann mit <code>.</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="terminal"><span class="gp">&gt;</span>ghci map <span class="o">(</span><span class="se">\x</span>s -&gt; negate <span class="o">(</span><span class="nb">sum</span> <span class="o">(</span><span class="nb">tail </span>xs<span class="o">)))</span> <span class="o">[[</span>1,2,3],[4,5,6],[7,8]]
+<span class="go">[-5,-11,-8]
+
+</span><span class="gp">&gt;</span>ghci map <span class="o">(</span>negate <span class="nb">.</span> <span class="nb">sum</span> <span class="nb">.</span> <span class="nb">tail</span><span class="o">)</span> <span class="o">[[</span>1,2,3],[4,5,6],[7,8]]
+<span class="go">[-5,-11,-8]</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_operatoren">5.6. Operatoren</h3>
+<div class="paragraph">
+<p>Operatoren sind Funktionen, welche zwischen den Argumenten geschrieben werden können (infix) und aus den Zeichen <code>!#$%&amp;*+./&lt;&#8658;?@\^|-~</code> bestehen.</p>
+</div>
+<div class="paragraph">
+<p>Bei der Definition einer Operator-Funktion muss man Klammern verwenden:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="p">(</span><span class="o">|+|</span><span class="p">)</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">a</span> <span class="o">|+|</span> <span class="n">b</span> <span class="o">=</span> <span class="n">abs</span> <span class="n">a</span> <span class="o">+</span> <span class="n">abs</span> <span class="n">b</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Klammern benötigt man auch, wenn man Operatoren als normale Funktion verwenden möchte.
+Normale Funktionen können infix verwendet werden, wenn man Backticks verwendet.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="terminal"><span class="gp">&gt;</span>ghci 2 <span class="sb">`</span>add<span class="sb">`</span> 1
+<span class="go">3
+</span><span class="gp">&gt;</span>ghci <span class="o">(</span>+<span class="o">)</span> 2 1
+<span class="go">3</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Bei einer Aneinanderreihung werden Operatorenregeln wie Punkt vor Strich mit sogenannten <strong>Fixity Declarations</strong> behandelt.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_recursion">6. Recursion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Alsbezeichnet man den abstrakten Vorgang, dass Regeln auf ein Produkt, das sie selbst erzeugt haben, von neuem angewandt werden wie die bekannten russischen Puppen oder dieses Bild hier:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./assets/images/recursion.gif" alt="Recursion" width="50%">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_quellen">7. Quellen</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
 <p><a href="http://learnyouahaskell.com/types-and-typeclasses" class="bare">http://learnyouahaskell.com/types-and-typeclasses</a></p>
+</li>
+<li>
+<p><a href="http://learnyouahaskell.com/higher-order-functions" class="bare">http://learnyouahaskell.com/higher-order-functions</a></p>
 </li>
 <li>
 <p><a href="https://hackage.haskell.org/package/base-4.9.0.0/docs/Data-List.html" class="bare">https://hackage.haskell.org/package/base-4.9.0.0/docs/Data-List.html</a></p>
@@ -1396,7 +1855,7 @@ Beispiele:</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-10-29 17:51:42 +0100
+Last updated 2020-10-31 19:57:03 +0100
 </div>
 </div>
 <style>
