@@ -483,7 +483,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_operatoren">5.6. Operatoren</a></li>
 </ul>
 </li>
-<li><a href="#_recursion">6. Recursion</a></li>
+<li><a href="#_rekursion">6. Rekursion</a>
+<ul class="sectlevel2">
+<li><a href="#_arten_von_rekursion">6.1. Arten von Rekursion</a></li>
+</ul>
+</li>
 <li><a href="#_quellen">7. Quellen</a></li>
 </ul>
 </div>
@@ -1822,14 +1826,159 @@ Normale Funktionen können infix verwendet werden, wenn man Backticks verwendet.
 </div>
 </div>
 <div class="sect1">
-<h2 id="_recursion">6. Recursion</h2>
+<h2 id="_rekursion">6. Rekursion</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Alsbezeichnet man den abstrakten Vorgang, dass Regeln auf ein Produkt, das sie selbst erzeugt haben, von neuem angewandt werden wie die bekannten russischen Puppen oder dieses Bild hier:</p>
+<p>Rekursion ist eine Möglichkeit, Funktionen zu definieren, bei denen die Funktion innerhalb ihrer eigenen Definition angewendet wird.
+Hier ein anschauliches Bild:</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="./assets/images/recursion.gif" alt="Recursion" width="50%">
+</div>
+</div>
+<div class="paragraph">
+<p>Bei der Implementierung einer rekursiven Funktion kann man systematisch vorgehen.</p>
+</div>
+<div class="paragraph">
+<p>Hier eine Beispielfunktion für die Fakultät:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="n">factorial</span> <span class="o">::</span> <span class="kt">Integer</span> <span class="o">-&gt;</span> <span class="kt">Integer</span>
+<span class="n">factorial</span> <span class="mi">0</span> <span class="o">=</span> <span class="mi">1</span> <i class="conum" data-value="1"></i><b>(1)</b>
+<span class="n">factorial</span> <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>  <i class="conum" data-value="2"></i><b>(2)</b> <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><strong>Basisfall</strong>: Es braucht einen einfachen Basisfall wie <code>factorial 0 = 1</code>, damit die Rekursion nicht unendlich ist. Es kann auch mehrere Basisfälle geben.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><strong>Rekursionsschritt</strong>:  Hier <code>n *</code>. Man muss sich folgende Überlegung machen.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><strong>Fortschritt</strong>: Es braucht einen Fortschritt in Richtung des Basisfalls <code>factorial (n-1)</code></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Als letztes muss man noch die Implementierung überprüfen in den folgenden Schritten:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ist die Basisregel implementiert und in einer Fallunterscheidung vom Rekursionsschritt getrennt?</p>
+</li>
+<li>
+<p>Wird im Rekursionsschritt die Funktion selbst wieder aufgerufen? Und tun sie dies auch so, dass die Problemgrösse verkleinert wird hin zum Basisfall?</p>
+</li>
+<li>
+<p>Tun Sie im Rekursionsschritt auch etwas Sinnvolles um das Problem zu lösen?</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Weitere Beispiele für Rekursive Funktionen:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="n">countDown</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span>
+<span class="n">countDown</span> <span class="mi">0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">countDown</span> <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">:</span><span class="n">countDown</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">countUp</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span>
+<span class="n">countUp</span> <span class="mi">0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">countUp</span> <span class="n">n</span> <span class="o">=</span> <span class="n">countUp</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">++</span> <span class="p">[</span><span class="n">n</span><span class="p">]</span>
+
+<span class="n">countDownUp</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span>
+<span class="n">countDownUp</span> <span class="mi">0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">countDownUp</span> <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">:</span><span class="n">countDownUp</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">++</span> <span class="p">[</span><span class="n">n</span><span class="p">]</span></code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_arten_von_rekursion">6.1. Arten von Rekursion</h3>
+<div class="sect3">
+<h4 id="_mutual_recursion">Mutual Recursion</h4>
+<div class="paragraph">
+<p>Zwei oder mehrere Funktionen können rekursiv gegenüber einander sein.</p>
+</div>
+<div class="paragraph">
+<p>Hier ein Beispiel:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="n">isEven</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+<span class="n">isEven</span> <span class="mi">0</span> <span class="o">=</span> <span class="kt">True</span> <span class="c1">--(e.1)</span>
+<span class="n">isEven</span> <span class="n">n</span> <span class="o">=</span> <span class="n">isOdd</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1">--(e.2)</span>
+
+<span class="n">isOdd</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Bool</span>
+<span class="n">isOdd</span> <span class="mi">0</span> <span class="o">=</span> <span class="kt">False</span> <span class="c1">--(o.1)</span>
+<span class="n">isOdd</span> <span class="n">n</span> <span class="o">=</span> <span class="n">isEven</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1">--(o.2)</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_tail_recursion">Tail Recursion</h4>
+<div class="paragraph">
+<p>Eine Funktion ist Tail Recursive, wenn der äusserste Ausdruck der rekursive Aufruf ist. Solche Rekursionen werden vom Compiler optimiert:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="n">sum</span> <span class="o">::</span> <span class="kt">Num</span> <span class="n">a</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="c1">-- not tail recursive</span>
+<span class="n">sum</span> <span class="kt">[]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">sum</span> <span class="p">(</span><span class="n">i</span><span class="o">:</span><span class="n">is</span><span class="p">)</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">sum</span> <span class="n">is</span>
+
+<span class="n">sum</span> <span class="o">::</span> <span class="kt">Num</span> <span class="n">a</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="c1">-- tail recursive</span>
+<span class="n">sum</span> <span class="n">l</span> <span class="o">=</span> <span class="n">sum'</span> <span class="mi">0</span> <span class="n">l</span>
+<span class="kr">where</span> <span class="n">sum'</span> <span class="n">acc</span> <span class="kt">[]</span> <span class="o">=</span> <span class="n">acc</span>
+<span class="n">sum'</span> <span class="n">acc</span> <span class="p">(</span><span class="n">i</span><span class="o">:</span><span class="n">is</span><span class="p">)</span> <span class="o">=</span> <span class="n">sum'</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">acc</span><span class="p">)</span> <span class="n">is</span> <span class="c1">-- tail call</span>
+
+<span class="n">len</span> <span class="o">::</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="c1">--not tail recursive</span>
+<span class="n">len</span> <span class="kt">[]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">len</span> <span class="p">(</span><span class="kr">_</span><span class="o">:</span><span class="n">is</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">len</span> <span class="n">is</span>
+
+<span class="n">len'</span> <span class="o">::</span> <span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="kt">Int</span> <span class="c1">--tail recursive</span>
+<span class="n">len'</span> <span class="n">list</span> <span class="o">=</span> <span class="n">lenRec</span> <span class="n">list</span> <span class="mi">0</span>
+   <span class="kr">where</span> <span class="n">lenRec</span> <span class="kt">[]</span>     <span class="n">acc</span> <span class="o">=</span> <span class="n">acc</span>
+         <span class="n">lenRec</span> <span class="p">(</span><span class="kr">_</span><span class="o">:</span><span class="n">is</span><span class="p">)</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">lenRec</span> <span class="n">is</span> <span class="p">(</span><span class="n">acc</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_schleifen_und_rekursion">Schleifen und Rekursion</h4>
+<div class="paragraph">
+<p>Jede Schleife kann auch als Rekursion ausgedrückt werden. In Haskell gibt es keine andere Möglichkeit eine Schleife zu realisieren.</p>
+</div>
+<div class="paragraph">
+<p>Hier ein Beispiel aus Java:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kt">int</span> <span class="nf">sum</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+  <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="k">while</span> <span class="o">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">sum</span> <span class="o">+=</span> <span class="n">n</span><span class="o">;</span>
+    <span class="n">n</span><span class="o">--;</span>
+  <span class="o">}</span>
+  <span class="k">return</span> <span class="n">sum</span><span class="o">;</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Hier dasselbe in Haskell</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="haskell"><span class="n">sum</span> <span class="o">::</span> <span class="kt">Int</span> <span class="o">-&gt;</span> <span class="kt">Int</span>
+<span class="n">sum</span> <span class="mi">0</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">sum</span> <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="n">sum</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span></code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1855,7 +2004,7 @@ Normale Funktionen können infix verwendet werden, wenn man Backticks verwendet.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-10-31 19:57:03 +0100
+Last updated 2020-11-01 14:10:47 +0100
 </div>
 </div>
 <style>

@@ -909,14 +909,114 @@ Normale Funktionen können infix verwendet werden, wenn man Backticks verwendet.
 
 Bei einer Aneinanderreihung werden Operatorenregeln wie Punkt vor Strich mit sogenannten *Fixity Declarations* behandelt.
 
-== Recursion
-Alsbezeichnet man den abstrakten Vorgang, dass Regeln auf ein Produkt, das sie selbst erzeugt haben, von neuem angewandt werden wie die bekannten russischen Puppen oder dieses Bild hier:
+== Rekursion
+Rekursion ist eine Möglichkeit, Funktionen zu definieren, bei denen die Funktion innerhalb ihrer eigenen Definition angewendet wird.
+Hier ein anschauliches Bild:
 
 image::recursion.gif[Recursion,50%]
 
+Bei der Implementierung einer rekursiven Funktion kann man systematisch vorgehen.
 
+Hier eine Beispielfunktion für die Fakultät:
+[source, haskell]
+----
+factorial :: Integer -> Integer
+factorial 0 = 1 <1>
+factorial n = n * factorial (n-1) <2> <3>
+----
+<1> *Basisfall*: Es braucht einen einfachen Basisfall wie `factorial 0 = 1`, damit die Rekursion nicht unendlich ist. Es kann auch mehrere Basisfälle geben.
+<2> *Rekursionsschritt*:  Hier `n *`. Man muss sich folgende Überlegung machen.
+<3> *Fortschritt*: Es braucht einen Fortschritt in Richtung des Basisfalls `factorial (n-1)`
 
+Als letztes muss man noch die Implementierung überprüfen in den folgenden Schritten:
 
+*	Ist die Basisregel implementiert und in einer Fallunterscheidung vom Rekursionsschritt getrennt?
+*	Wird im Rekursionsschritt die Funktion selbst wieder aufgerufen? Und tun sie dies auch so, dass die Problemgrösse verkleinert wird hin zum Basisfall?
+*	Tun Sie im Rekursionsschritt auch etwas Sinnvolles um das Problem zu lösen?
+
+Weitere Beispiele für Rekursive Funktionen:
+[source, haskell]
+----
+countDown :: Int -> [Int]
+countDown 0 = [0]
+countDown n = n:countDown (n-1)
+
+countUp :: Int -> [Int]
+countUp 0 = [0]
+countUp n = countUp (n-1) ++ [n]
+
+countDownUp :: Int -> [Int]
+countDownUp 0 = [0]
+countDownUp n = n:countDownUp(n-1) ++ [n]
+----
+
+=== Arten von Rekursion
+
+==== Mutual Recursion
+Zwei oder mehrere Funktionen können rekursiv gegenüber einander sein.
+
+Hier ein Beispiel:
+
+[source, haskell]
+----
+isEven :: Int -> Bool
+isEven 0 = True --(e.1)
+isEven n = isOdd (n-1) --(e.2)
+
+isOdd :: Int -> Bool
+isOdd 0 = False --(o.1)
+isOdd n = isEven (n-1) --(o.2)
+----
+
+==== Tail Recursion
+Eine Funktion ist Tail Recursive, wenn der äusserste Ausdruck der rekursive Aufruf ist. Solche Rekursionen werden vom Compiler optimiert:
+
+[source, haskell]
+----
+sum :: Num a => [a] -> a -- not tail recursive
+sum [] = 0
+sum (i:is) = i + sum is
+
+sum :: Num a => [a] -> a -- tail recursive
+sum l = sum' 0 l
+where sum' acc [] = acc
+sum' acc (i:is) = sum' (i+acc) is -- tail call
+
+len :: [a] -> Int --not tail recursive
+len [] = 0
+len (_:is) = 1 + len is
+
+len' :: [a] -> Int --tail recursive
+len' list = lenRec list 0
+   where lenRec []     acc = acc
+         lenRec (_:is) acc = lenRec is (acc+1)
+
+----
+
+==== Schleifen und Rekursion
+Jede Schleife kann auch als Rekursion ausgedrückt werden. In Haskell gibt es keine andere Möglichkeit eine Schleife zu realisieren.
+
+Hier ein Beispiel aus Java:
+
+[source, java]
+----
+int sum(int n) {
+  int sum = 0;
+  while (n > 0) {
+    sum += n;
+    n--;
+  }
+  return sum;
+}
+----
+Hier dasselbe in Haskell
+
+[source, haskell]
+----
+sum :: Int -> Int
+sum 0 = 0
+sum n = n + sum (n-1)
+----
 
 == Quellen
 * http://learnyouahaskell.com/types-and-typeclasses
